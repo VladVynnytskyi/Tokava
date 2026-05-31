@@ -1,8 +1,8 @@
-# AI Cost Analyzer
+# TokenTrack
 
 A web dashboard that turns your OpenAI or Claude API usage CSV into a beautiful, interactive cost report — in seconds.
 
-![AI Cost Analyzer](https://img.shields.io/badge/Python-FastAPI-009688?style=flat-square&logo=fastapi) ![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=flat-square&logo=pandas) ![Plotly](https://img.shields.io/badge/Plotly.js-Charts-3F4F75?style=flat-square&logo=plotly)
+![TokenTrack](https://img.shields.io/badge/Python-FastAPI-009688?style=flat-square&logo=fastapi) ![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=flat-square&logo=pandas) ![Plotly](https://img.shields.io/badge/Plotly.js-Charts-3F4F75?style=flat-square&logo=plotly)
 
 ## What it does
 
