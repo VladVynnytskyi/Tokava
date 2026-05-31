@@ -97,17 +97,28 @@ def analyze_csv(file_path_or_buffer) -> dict:
         .to_dict(orient="records")
     )
 
+    date_from = df["timestamp"].min().date()
+    date_to = df["timestamp"].max().date()
+    days_in_range = max((date_to - date_from).days, 1)
+    monthly_projection = round(total_cost / days_in_range * 30, 2)
+
+    # Requests by model (count)
+    requests_by_model = df.groupby("model").size().to_dict()
+
     return {
         "summary": {
             "total_cost_usd": total_cost,
             "total_requests": total_requests,
             "total_tokens": total_tokens,
             "avg_cost_per_request": round(total_cost / total_requests, 6) if total_requests else 0,
+            "days_in_range": days_in_range,
+            "monthly_projection": monthly_projection,
             "date_range": {
-                "from": str(df["timestamp"].min().date()),
-                "to": str(df["timestamp"].max().date()),
+                "from": str(date_from),
+                "to": str(date_to),
             },
         },
+        "requests_by_model": requests_by_model,
         "by_model": by_model,
         "by_day": by_day,
         "by_project": by_project,

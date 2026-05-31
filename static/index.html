@@ -28,18 +28,26 @@
     <div class="logo">📊</div>
     <span class="logo-text">Tokava</span>
   </div>
-  <span class="header-pill">OpenAI &amp; Claude API</span>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('uk')">UA</button>
+      <button class="lang-btn" onclick="setLang('pl')">PL</button>
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+    </div>
+    <span class="header-pill">OpenAI &amp; Claude API</span>
+  </div>
 </header>
 
 <main>
 
   <!-- ── UPLOAD ── -->
   <section id="upload-section">
-    <span class="hero-label">✨ Free &amp; instant analysis</span>
-    <h1 class="hero-headline">Understand your<br><span class="grad">AI spending</span></h1>
-    <p class="hero-sub">
-      Upload your API usage CSV and get a complete breakdown of costs,
-      top users, and suspicious activity — in seconds.
+    <span class="hero-label" data-i18n="hero_label">🔍 AI Cost Audit — free &amp; instant</span>
+    <h1 class="hero-headline" data-i18n="hero_headline">Find where your<br><span class="grad">AI budget leaks</span></h1>
+    <p class="hero-sub" data-i18n="hero_sub">
+      Upload your CSV — no API keys, no sign-up, no risk.<br>
+      Get specific savings recommendations in 10 seconds.
     </p>
 
     <div id="drop-zone">
@@ -513,107 +521,265 @@
     window.print();
   }
 
-  // ── Smart Insights ──
+  // ── i18n ──
+  const LANGS = {
+    en: {
+      hero_label: "🔍 AI Cost Audit — free & instant",
+      hero_headline: "Find where your<br><span class='grad'>AI budget leaks</span>",
+      hero_sub: "Upload your CSV — no API keys, no sign-up, no risk.<br>Get specific savings recommendations in 10 seconds.",
+      drop_title: "Drop your CSV file here",
+      drop_hint: "or click the button to browse files from your computer",
+      choose_file: "📁 Choose file",
+      try_demo: "▶ Try with demo data",
+      step1: "Upload CSV from OpenAI / Claude",
+      step2: "We audit your costs",
+      step3: "Get savings recommendations",
+      analyzing: "Auditing your spending...",
+      upload_another: "← Upload another file",
+      download_pdf: "⬇ Download PDF",
+      at_a_glance: "At a glance",
+      total_spent: "Total Spent",
+      api_calls: "API Calls",
+      total_tokens: "Total Tokens",
+      anomalies: "Anomalies",
+      monthly_proj: "Monthly Projection",
+      avg_per_call: "avg per call",
+      words_in_out: "words in + words out",
+      suspicious: "suspicious requests",
+      at_current_rate: "at current burn rate",
+      insights_label: "💡 Savings recommendations",
+      no_anomalies: "✅ Great news! No suspicious requests found — your usage looks healthy.",
+    },
+    uk: {
+      hero_label: "🔍 AI Cost Audit — безкоштовно та миттєво",
+      hero_headline: "Знайди де<br><span class='grad'>витікає бюджет на AI</span>",
+      hero_sub: "Завантаж CSV — без API ключів, без реєстрації, без ризику.<br>Отримай конкретні рекомендації за 10 секунд.",
+      drop_title: "Перетягни CSV файл сюди",
+      drop_hint: "або натисни кнопку щоб обрати файл",
+      choose_file: "📁 Обрати файл",
+      try_demo: "▶ Спробувати з демо даними",
+      step1: "Завантаж CSV з OpenAI / Claude",
+      step2: "Ми аналізуємо витрати",
+      step3: "Отримай рекомендації",
+      analyzing: "Аналізуємо витрати...",
+      upload_another: "← Завантажити інший файл",
+      download_pdf: "⬇ Завантажити PDF",
+      at_a_glance: "Загальна статистика",
+      total_spent: "Загальні витрати",
+      api_calls: "API запитів",
+      total_tokens: "Токенів всього",
+      anomalies: "Аномалій",
+      monthly_proj: "Прогноз на місяць",
+      avg_per_call: "сер. за запит",
+      words_in_out: "вхідні + вихідні",
+      suspicious: "підозрілих запитів",
+      at_current_rate: "при поточному темпі",
+      insights_label: "💡 Рекомендації для економії",
+      no_anomalies: "✅ Підозрілих запитів не знайдено — все виглядає нормально.",
+    },
+    pl: {
+      hero_label: "🔍 AI Cost Audit — bezpłatnie i natychmiastowo",
+      hero_headline: "Znajdź gdzie<br><span class='grad'>wycieka budżet AI</span>",
+      hero_sub: "Prześlij CSV — bez kluczy API, bez rejestracji, bez ryzyka.<br>Otrzymaj konkretne rekomendacje w 10 sekund.",
+      drop_title: "Upuść plik CSV tutaj",
+      drop_hint: "lub kliknij przycisk aby wybrać plik",
+      choose_file: "📁 Wybierz plik",
+      try_demo: "▶ Wypróbuj z danymi demo",
+      step1: "Prześlij CSV z OpenAI / Claude",
+      step2: "Analizujemy koszty",
+      step3: "Otrzymaj rekomendacje",
+      analyzing: "Analizujemy wydatki...",
+      upload_another: "← Prześlij inny plik",
+      download_pdf: "⬇ Pobierz PDF",
+      at_a_glance: "Przegląd",
+      total_spent: "Łączne wydatki",
+      api_calls: "Zapytania API",
+      total_tokens: "Łączne tokeny",
+      anomalies: "Anomalie",
+      monthly_proj: "Prognoza miesięczna",
+      avg_per_call: "śr. na zapytanie",
+      words_in_out: "wejście + wyjście",
+      suspicious: "podejrzanych zapytań",
+      at_current_rate: "przy obecnym tempie",
+      insights_label: "💡 Rekomendacje oszczędności",
+      no_anomalies: "✅ Nie wykryto anomalii — użycie wygląda normalnie.",
+    },
+    de: {
+      hero_label: "🔍 AI Cost Audit — kostenlos & sofort",
+      hero_headline: "Finde wo dein<br><span class='grad'>AI-Budget verloren geht</span>",
+      hero_sub: "Lade deine CSV hoch — keine API-Schlüssel, keine Anmeldung, kein Risiko.<br>Erhalte konkrete Sparempfehlungen in 10 Sekunden.",
+      drop_title: "CSV-Datei hier ablegen",
+      drop_hint: "oder klicke auf den Button um eine Datei auszuwählen",
+      choose_file: "📁 Datei wählen",
+      try_demo: "▶ Mit Demo-Daten testen",
+      step1: "CSV von OpenAI / Claude hochladen",
+      step2: "Wir analysieren deine Kosten",
+      step3: "Sparempfehlungen erhalten",
+      analyzing: "Ausgaben werden analysiert...",
+      upload_another: "← Andere Datei hochladen",
+      download_pdf: "⬇ PDF herunterladen",
+      at_a_glance: "Überblick",
+      total_spent: "Gesamtausgaben",
+      api_calls: "API-Anfragen",
+      total_tokens: "Token gesamt",
+      anomalies: "Anomalien",
+      monthly_proj: "Monatsprognose",
+      avg_per_call: "Ø pro Anfrage",
+      words_in_out: "Eingabe + Ausgabe",
+      suspicious: "verdächtige Anfragen",
+      at_current_rate: "bei aktuellem Tempo",
+      insights_label: "💡 Sparempfehlungen",
+      no_anomalies: "✅ Keine Anomalien gefunden — alles sieht normal aus.",
+    },
+  };
+
+  let currentLang = "en";
+
+  function setLang(lang) {
+    currentLang = lang;
+    const t = LANGS[lang];
+    document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add("active");
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      if (t[key]) el.innerHTML = t[key];
+    });
+  }
+
+  function t(key) { return LANGS[currentLang][key] || LANGS.en[key] || key; }
+
+  // ── Smart Insights (Recommendations Engine) ──
   function buildInsights(d) {
     const s = d.summary;
     const insights = [];
+    const monthly = s.monthly_projection;
+    const days = s.days_in_range;
 
-    // Top user
-    const topUser = Object.keys(d.top_users)[0];
-    const topUserCost = Object.values(d.top_users)[0];
-    const topUserPct = ((topUserCost / s.total_cost_usd) * 100).toFixed(0);
+    // 1. Monthly projection
     insights.push({
-      icon: "👤",
+      icon: "📈",
       color: "purple",
-      title: `<b>${topUser}</b> is your biggest spender`,
-      body: `They account for <b>${topUserPct}%</b> of your total budget ($${topUserCost.toFixed(4)}). Consider setting usage limits or reviewing their workflows.`,
+      title: `Projected monthly bill: <b>$${monthly.toFixed(2)}</b>`,
+      body: `Based on your last <b>${days} day${days>1?"s":""}</b> of usage ($${s.total_cost_usd.toFixed(4)} total). At this rate you'll spend <b>$${(monthly*12).toFixed(0)}/year</b>.`,
+      savings: null,
     });
 
-    // Expensive model tip
+    // 2. Model switching savings
     const models = Object.keys(d.by_model);
-    const hasMini = models.some(m => m.includes("mini") || m.includes("haiku"));
-    const hasExpensive = models.some(m => m.includes("gpt-4o") && !m.includes("mini") || m.includes("opus"));
-    if (hasExpensive && hasMini) {
-      const expensiveCost = Object.entries(d.by_model).find(([m]) => !m.includes("mini") && !m.includes("haiku"));
-      const cheapCost = Object.entries(d.by_model).find(([m]) => m.includes("mini") || m.includes("haiku"));
-      const ratio = (expensiveCost[1] / (expensiveCost[1] + cheapCost[1]) * 100).toFixed(0);
+    const expensiveEntry = Object.entries(d.by_model).find(([m]) =>
+      (m.includes("gpt-4o") && !m.includes("mini")) || m.includes("opus") || m.includes("sonnet")
+    );
+    const cheapEntry = Object.entries(d.by_model).find(([m]) =>
+      m.includes("mini") || m.includes("haiku")
+    );
+
+    if (expensiveEntry && !cheapEntry) {
+      const expCost = expensiveEntry[1];
+      const expReqs = (d.requests_by_model || {})[expensiveEntry[0]] || 0;
+      const expPct = ((expCost / s.total_cost_usd) * 100).toFixed(0);
+      const potentialSave = (expCost * 0.4 * (30/days)).toFixed(2);
       insights.push({
-        icon: "💡",
+        icon: "💰",
         color: "yellow",
-        title: `${ratio}% of costs come from the expensive model`,
-        body: `<b>${expensiveCost[0]}</b> costs ~50× more per token than <b>${cheapCost[0]}</b>. Routing simpler tasks to the cheaper model could cut your bill significantly.`,
+        title: `<b>${expensiveEntry[0]}</b> drives <b>${expPct}%</b> of your costs`,
+        body: `You're using only the premium model for all <b>${expReqs} requests</b>. Switching ~40% of simpler tasks to a mini/haiku model could save approximately <b>$${potentialSave}/month</b>.`,
+        savings: `~$${potentialSave}/mo`,
+      });
+    } else if (expensiveEntry && cheapEntry) {
+      const expCost = expensiveEntry[1];
+      const expReqs = (d.requests_by_model || {})[expensiveEntry[0]] || 0;
+      const totalReqs = s.total_requests;
+      const expReqPct = ((expReqs / totalReqs) * 100).toFixed(0);
+      const expCostPct = ((expCost / s.total_cost_usd) * 100).toFixed(0);
+      const potentialSave = (expCost * 0.3 * (30/days)).toFixed(2);
+      insights.push({
+        icon: "💰",
+        color: "yellow",
+        title: `<b>${expensiveEntry[0]}</b> — ${expReqPct}% of requests, ${expCostPct}% of costs`,
+        body: `Moving another 30% of these requests to <b>${cheapEntry[0]}</b> could save an estimated <b>$${potentialSave}/month</b>.`,
+        savings: `~$${potentialSave}/mo`,
       });
     } else if (models.length === 1) {
       insights.push({
         icon: "💡",
         color: "yellow",
-        title: `You're using only one model`,
-        body: `All requests go through <b>${models[0]}</b>. Consider testing a cheaper model for simpler tasks — you could save 30–80% on those calls.`,
+        title: `Only one model in use`,
+        body: `All requests use <b>${models[0]}</b>. Testing a cheaper model for simple tasks could reduce costs by 30–80%.`,
+        savings: null,
       });
     }
 
-    // Peak day
-    const peakDay = d.by_day.reduce((a, b) => b.cost > a.cost ? b : a);
-    const avgDay = s.total_cost_usd / d.by_day.length;
-    const peakMultiplier = (peakDay.cost / avgDay).toFixed(1);
+    // 3. Top user concentration
+    const topUser = Object.keys(d.top_users)[0];
+    const topUserCost = Object.values(d.top_users)[0];
+    const topUserPct = ((topUserCost / s.total_cost_usd) * 100).toFixed(0);
+    const topUserMonthly = (topUserCost / days * 30).toFixed(2);
     insights.push({
-      icon: "📅",
+      icon: "👤",
       color: "cyan",
-      title: `Your busiest day was <b>${peakDay.date}</b>`,
-      body: `You spent <b>$${peakDay.cost.toFixed(4)}</b> — that's <b>${peakMultiplier}×</b> your daily average. Check what happened that day: batch job, traffic spike, or a bug?`,
+      title: `<b>${topUser}</b> accounts for <b>${topUserPct}%</b> of spending`,
+      body: `This user costs <b>$${topUserMonthly}/month</b> at the current rate. If this is automated usage, consider adding rate limits or reviewing their prompt efficiency.`,
+      savings: null,
     });
 
-    // Top project
-    const topProject = Object.keys(d.by_project)[0];
-    const topProjectCost = Object.values(d.by_project)[0];
-    const topProjectPct = ((topProjectCost / s.total_cost_usd) * 100).toFixed(0);
-    if (Object.keys(d.by_project).length > 1) {
+    // 4. Peak day spike
+    const peakDay = d.by_day.reduce((a, b) => b.cost > a.cost ? b : a);
+    const avgDay = (s.total_cost_usd / d.by_day.length);
+    const peakMultiplier = (peakDay.cost / avgDay).toFixed(1);
+    if (peakMultiplier > 1.5) {
       insights.push({
-        icon: "📁",
-        color: "green",
-        title: `<b>${topProject}</b> drives most of your spending`,
-        body: `This project is responsible for <b>${topProjectPct}%</b> of total costs. It may be worth setting a monthly budget alert for it.`,
+        icon: "⚡",
+        color: "cyan",
+        title: `Cost spike on <b>${peakDay.date}</b> — ${peakMultiplier}× above average`,
+        body: `You spent <b>$${peakDay.cost.toFixed(4)}</b> vs. a daily average of $${avgDay.toFixed(4)}. This spike suggests a batch job, a bug, or unexpected traffic. Set up cost alerts to catch this earlier.`,
+        savings: null,
       });
     }
 
-    // Token efficiency
-    const totalInput = d.tokens_by_model.reduce((s, r) => s + r.input_tokens, 0);
-    const totalOutput = d.tokens_by_model.reduce((s, r) => s + r.output_tokens, 0);
-    const ratio = (totalOutput / totalInput * 100).toFixed(0);
-    if (ratio < 30) {
+    // 5. Token efficiency
+    const totalInput = d.tokens_by_model.reduce((acc, r) => acc + r.input_tokens, 0);
+    const totalOutput = d.tokens_by_model.reduce((acc, r) => acc + r.output_tokens, 0);
+    const tokenRatio = (totalOutput / totalInput * 100).toFixed(0);
+    if (tokenRatio < 25) {
+      const potentialSave = (s.total_cost_usd * 0.15 * 30 / days).toFixed(2);
       insights.push({
         icon: "🔢",
         color: "blue",
-        title: `Your output/input token ratio is low (${ratio}%)`,
-        body: `You're sending much more text than you're receiving back. Consider shortening your system prompts or compressing the context — it could reduce costs noticeably.`,
+        title: `High input/output ratio — prompts may be too long`,
+        body: `You send <b>${(totalInput/1000).toFixed(0)}K input</b> tokens to get <b>${(totalOutput/1000).toFixed(0)}K output</b> (${tokenRatio}% ratio). Trimming system prompts could save ~<b>$${potentialSave}/month</b>.`,
+        savings: `~$${potentialSave}/mo`,
       });
     } else {
       insights.push({
         icon: "✅",
         color: "green",
-        title: `Good token efficiency`,
-        body: `Your output/input ratio is <b>${ratio}%</b> — a healthy sign. Prompts are reasonably sized relative to the responses you're getting.`,
+        title: `Token efficiency looks healthy (${tokenRatio}% output ratio)`,
+        body: `Your prompts are well-sized relative to responses. No obvious waste in token usage detected.`,
+        savings: null,
       });
     }
 
-    // Anomaly tip
+    // 6. Anomalies
     if (d.anomalies.length > 0) {
       const worst = d.anomalies[0];
+      const anomalyCost = d.anomalies.reduce((acc, a) => acc + a.cost_usd, 0);
+      const monthlySave = (anomalyCost / days * 30).toFixed(2);
       insights.push({
         icon: "🚨",
         color: "red",
-        title: `${d.anomalies.length} suspicious request${d.anomalies.length > 1 ? "s" : ""} detected`,
-        body: `The most expensive was <b>$${worst.cost_usd.toFixed(4)}</b> by <b>${worst.user_id}</b> on ${worst.timestamp.split(" ")[0]}. These could be runaway loops or accidental large context windows — worth investigating.`,
+        title: `${d.anomalies.length} anomalous request${d.anomalies.length > 1 ? "s" : ""} — potential waste`,
+        body: `The worst was <b>$${worst.cost_usd.toFixed(4)}</b> by <b>${worst.user_id}</b>. Fixing these anomalies could recover <b>~$${monthlySave}/month</b>.`,
+        savings: `~$${monthlySave}/mo`,
       });
     }
 
     const colorMap = {
-      purple: { bg: "rgba(168,85,247,0.08)", border: "rgba(168,85,247,0.2)", dot: "#a855f7" },
-      yellow: { bg: "rgba(251,191,36,0.07)", border: "rgba(251,191,36,0.2)", dot: "#fbbf24" },
-      cyan:   { bg: "rgba(34,211,238,0.07)", border: "rgba(34,211,238,0.2)", dot: "#22d3ee" },
-      green:  { bg: "rgba(52,211,153,0.07)", border: "rgba(52,211,153,0.2)", dot: "#34d399" },
-      red:    { bg: "rgba(248,113,113,0.08)", border: "rgba(248,113,113,0.2)", dot: "#f87171" },
-      blue:   { bg: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.2)", dot: "#6366f1" },
+      purple: { bg: "rgba(168,85,247,0.08)", border: "rgba(168,85,247,0.25)" },
+      yellow: { bg: "rgba(251,191,36,0.07)", border: "rgba(251,191,36,0.25)" },
+      cyan:   { bg: "rgba(34,211,238,0.07)", border: "rgba(34,211,238,0.25)" },
+      green:  { bg: "rgba(52,211,153,0.07)", border: "rgba(52,211,153,0.25)" },
+      red:    { bg: "rgba(248,113,113,0.08)", border: "rgba(248,113,113,0.25)" },
+      blue:   { bg: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.25)" },
     };
 
     const grid = document.getElementById("insights-grid");
@@ -625,6 +791,7 @@
           <div class="insight-body">
             <div class="insight-title">${ins.title}</div>
             <div class="insight-text">${ins.body}</div>
+            ${ins.savings ? `<div class="insight-savings">${ins.savings} potential saving</div>` : ""}
           </div>
         </div>`;
     }).join("");
