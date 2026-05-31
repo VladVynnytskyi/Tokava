@@ -284,104 +284,104 @@
     <div class="dash-header">
       <div>
         <div class="dash-title">
-          Usage Dashboard
+          <span data-i18n="dash_title">Usage Dashboard</span>
           <span class="date-range" id="dash-date-range"></span>
         </div>
       </div>
       <div class="dash-actions">
-        <button class="btn-pdf" onclick="downloadPDF()">⬇ Download PDF</button>
-        <button class="btn-ghost" onclick="reset()">← New file</button>
+        <button class="btn-pdf" onclick="downloadPDF()" data-i18n="download_pdf">⬇ Download PDF</button>
+        <button class="btn-ghost" onclick="reset()" data-i18n="upload_another">← New file</button>
       </div>
     </div>
 
     <!-- Summary cards -->
-    <p class="section-label">At a glance</p>
+    <p class="section-label" data-i18n="at_a_glance">At a glance</p>
     <div class="cards">
       <div class="card card-accent">
         <span class="card-icon">💸</span>
-        <div class="card-label">Total Spent</div>
+        <div class="card-label" data-i18n="total_spent">Total Spent</div>
         <div class="card-value" id="c-total-cost">—</div>
         <div class="card-sub" id="c-avg-cost">— avg per call</div>
-        <div class="card-tooltip">How much money you paid to the AI API in total</div>
+        <div class="card-tooltip" data-i18n="tooltip_total_spent">How much money you paid to the AI API in total</div>
       </div>
       <div class="card card-cyan">
         <span class="card-icon">⚡</span>
-        <div class="card-label">API Calls</div>
+        <div class="card-label" data-i18n="api_calls">API Calls</div>
         <div class="card-value" id="c-requests">—</div>
-        <div class="card-sub">total requests made</div>
-        <div class="card-tooltip">Each call = one time your app asked the AI something</div>
+        <div class="card-sub" data-i18n="total_reqs_made">total requests made</div>
+        <div class="card-tooltip" data-i18n="tooltip_api_calls">Each call = one time your app asked the AI something</div>
       </div>
       <div class="card card-green">
         <span class="card-icon">🔢</span>
-        <div class="card-label">Tokens Used</div>
+        <div class="card-label" data-i18n="total_tokens">Tokens Used</div>
         <div class="card-value" id="c-tokens">—</div>
-        <div class="card-sub">words in + words out</div>
-        <div class="card-tooltip">Tokens are how AI measures text — ~1 token ≈ ¾ of a word</div>
+        <div class="card-sub" data-i18n="words_in_out">words in + words out</div>
+        <div class="card-tooltip" data-i18n="tooltip_tokens">Tokens are how AI measures text — ~1 token ≈ ¾ of a word</div>
       </div>
       <div class="card card-red">
         <span class="card-icon">🚨</span>
-        <div class="card-label">Anomalies</div>
+        <div class="card-label" data-i18n="anomalies">Anomalies</div>
         <div class="card-value" id="c-anomalies">—</div>
-        <div class="card-sub">unusually expensive calls</div>
-        <div class="card-tooltip">Requests that cost way more than your average — worth reviewing</div>
+        <div class="card-sub" data-i18n="unusual_calls">unusually expensive calls</div>
+        <div class="card-tooltip" data-i18n="tooltip_anomalies">Requests that cost way more than your average — worth reviewing</div>
       </div>
     </div>
 
     <!-- Smart Insights -->
-    <p class="section-label">Smart insights</p>
+    <p class="section-label" data-i18n="insights_label">Smart insights</p>
     <div class="insights-grid" id="insights-grid"></div>
 
     <!-- Cost over time -->
-    <p class="section-label">Spending over time</p>
+    <p class="section-label" data-i18n="spending_over_time">Spending over time</p>
     <div class="charts-grid single">
       <div class="chart-box full" style="animation-delay:0.1s">
         <div class="chart-header">
-          <h3><span class="dot"></span>Daily Cost</h3>
-          <p>How much you spent each day — spikes may indicate heavy usage or a runaway process</p>
+          <h3><span class="dot"></span><span data-i18n="daily_cost_title">Daily Cost</span></h3>
+          <p data-i18n="daily_cost_sub">How much you spent each day — spikes may indicate heavy usage or a runaway process</p>
         </div>
         <div id="chart-by-day"></div>
       </div>
     </div>
 
     <!-- Breakdown -->
-    <p class="section-label">Where your money goes</p>
+    <p class="section-label" data-i18n="where_money_goes">Where your money goes</p>
     <div class="charts-grid">
       <div class="chart-box" style="animation-delay:0.15s">
         <div class="chart-header">
-          <h3><span class="dot"></span>Cost by Model</h3>
-          <p>GPT-4o costs ~50× more than GPT-4o-mini per token</p>
+          <h3><span class="dot"></span><span data-i18n="cost_by_model_title">Cost by Model</span></h3>
+          <p data-i18n="cost_by_model_sub">GPT-4o costs ~50× more than GPT-4o-mini per token</p>
         </div>
         <div id="chart-by-model"></div>
       </div>
       <div class="chart-box" style="animation-delay:0.2s">
         <div class="chart-header">
-          <h3><span class="dot"></span>Input vs Output Tokens</h3>
-          <p>Output tokens are usually 3–5× more expensive than input</p>
+          <h3><span class="dot"></span><span data-i18n="tokens_title">Input vs Output Tokens</span></h3>
+          <p data-i18n="tokens_sub">Output tokens are usually 3–5× more expensive than input</p>
         </div>
         <div id="chart-tokens"></div>
       </div>
       <div class="chart-box" style="animation-delay:0.25s">
         <div class="chart-header">
-          <h3><span class="dot"></span>Cost by Project</h3>
-          <p>Which project or app is spending the most</p>
+          <h3><span class="dot"></span><span data-i18n="cost_by_project_title">Cost by Project</span></h3>
+          <p data-i18n="cost_by_project_sub">Which project or app is spending the most</p>
         </div>
         <div id="chart-by-project"></div>
       </div>
       <div class="chart-box" style="animation-delay:0.3s">
         <div class="chart-header">
-          <h3><span class="dot"></span>Top Users by Spend</h3>
-          <p>Who is responsible for the most API usage</p>
+          <h3><span class="dot"></span><span data-i18n="top_users_title">Top Users by Spend</span></h3>
+          <p data-i18n="top_users_sub">Who is responsible for the most API usage</p>
         </div>
         <div id="chart-top-users"></div>
       </div>
     </div>
 
     <!-- Anomalies -->
-    <p class="section-label">Anomaly detection</p>
+    <p class="section-label" data-i18n="anomaly_detection">Anomaly detection</p>
     <div class="table-box">
       <div class="table-header">
-        <h3>🚨 Suspicious Requests</h3>
-        <p>These requests cost significantly more than your average — they may indicate a bug, a loop, or unexpected heavy usage.</p>
+        <h3 data-i18n="suspicious_requests">🚨 Suspicious Requests</h3>
+        <p data-i18n="suspicious_desc">These requests cost significantly more than your average — they may indicate a bug, a loop, or unexpected heavy usage.</p>
       </div>
       <div class="table-scroll">
         <div id="anomalies-table"></div>
@@ -569,6 +569,35 @@
       at_current_rate: "at current burn rate",
       insights_label: "💡 Savings recommendations",
       no_anomalies: "✅ Great news! No suspicious requests found — your usage looks healthy.",
+      dash_title: "Usage Dashboard",
+      total_reqs_made: "total requests made",
+      unusual_calls: "unusually expensive calls",
+      tooltip_total_spent: "How much money you paid to the AI API in total",
+      tooltip_api_calls: "Each call = one time your app asked the AI something",
+      tooltip_tokens: "Tokens are how AI measures text — ~1 token ≈ ¾ of a word",
+      tooltip_anomalies: "Requests that cost way more than your average — worth reviewing",
+      spending_over_time: "Spending over time",
+      where_money_goes: "Where your money goes",
+      anomaly_detection: "Anomaly detection",
+      daily_cost_title: "Daily Cost",
+      daily_cost_sub: "How much you spent each day — spikes may indicate heavy usage or a runaway process",
+      cost_by_model_title: "Cost by Model",
+      cost_by_model_sub: "GPT-4o costs ~50× more than GPT-4o-mini per token",
+      tokens_title: "Input vs Output Tokens",
+      tokens_sub: "Output tokens are usually 3–5× more expensive than input",
+      cost_by_project_title: "Cost by Project",
+      cost_by_project_sub: "Which project or app is spending the most",
+      top_users_title: "Top Users by Spend",
+      top_users_sub: "Who is responsible for the most API usage",
+      suspicious_requests: "🚨 Suspicious Requests",
+      suspicious_desc: "These requests cost significantly more than your average — they may indicate a bug, a loop, or unexpected heavy usage.",
+      table_when: "When",
+      table_model: "AI Model",
+      table_user: "User",
+      table_project: "Project",
+      table_tokens: "Tokens used",
+      table_cost: "Cost",
+      potential_saving: "potential saving",
     },
     uk: {
       hero_label: "🔍 AI Cost Audit — безкоштовно та миттєво",
@@ -616,6 +645,35 @@
       at_current_rate: "при поточному темпі",
       insights_label: "💡 Рекомендації для економії",
       no_anomalies: "✅ Підозрілих запитів не знайдено — все виглядає нормально.",
+      dash_title: "Аналітика використання",
+      total_reqs_made: "всього запитів",
+      unusual_calls: "підозрілих дорогих запитів",
+      tooltip_total_spent: "Скільки грошей ти заплатив за API всього",
+      tooltip_api_calls: "Один запит = один раз коли додаток звернувся до AI",
+      tooltip_tokens: "Токени — одиниця виміру тексту в AI, ~1 токен ≈ ¾ слова",
+      tooltip_anomalies: "Запити що коштують значно більше за середнє — варто перевірити",
+      spending_over_time: "Витрати по часу",
+      where_money_goes: "Куди йдуть кошти",
+      anomaly_detection: "Виявлення аномалій",
+      daily_cost_title: "Щоденні витрати",
+      daily_cost_sub: "Скільки витрачалось щодня — стрибки можуть вказувати на зависання або бота",
+      cost_by_model_title: "Витрати по моделях",
+      cost_by_model_sub: "GPT-4o коштує ~50× більше за GPT-4o-mini за токен",
+      tokens_title: "Вхідні vs Вихідні токени",
+      tokens_sub: "Вихідні токени зазвичай 3–5× дорожчі за вхідні",
+      cost_by_project_title: "Витрати по проектах",
+      cost_by_project_sub: "Який проект або додаток витрачає найбільше",
+      top_users_title: "Топ користувачів по витратах",
+      top_users_sub: "Хто відповідає за найбільше використання API",
+      suspicious_requests: "🚨 Підозрілі запити",
+      suspicious_desc: "Ці запити коштують значно більше за середнє — можуть вказувати на баг, цикл або надмірне використання.",
+      table_when: "Коли",
+      table_model: "AI Модель",
+      table_user: "Користувач",
+      table_project: "Проект",
+      table_tokens: "Токени",
+      table_cost: "Вартість",
+      potential_saving: "потенційна економія",
     },
     pl: {
       hero_label: "🔍 AI Cost Audit — bezpłatnie i natychmiastowo",
@@ -663,6 +721,35 @@
       at_current_rate: "przy obecnym tempie",
       insights_label: "💡 Rekomendacje oszczędności",
       no_anomalies: "✅ Nie wykryto anomalii — użycie wygląda normalnie.",
+      dash_title: "Panel analityczny",
+      total_reqs_made: "łącznie zapytań",
+      unusual_calls: "podejrzanych drogich zapytań",
+      tooltip_total_spent: "Ile pieniędzy zapłaciłeś za API łącznie",
+      tooltip_api_calls: "Jedno zapytanie = jeden raz kiedy aplikacja zwróciła się do AI",
+      tooltip_tokens: "Tokeny — jednostka miary tekstu w AI, ~1 token ≈ ¾ słowa",
+      tooltip_anomalies: "Zapytania kosztujące znacznie więcej niż średnia — warto sprawdzić",
+      spending_over_time: "Wydatki w czasie",
+      where_money_goes: "Gdzie idą pieniądze",
+      anomaly_detection: "Wykrywanie anomalii",
+      daily_cost_title: "Dzienny koszt",
+      daily_cost_sub: "Ile wydajesz każdego dnia — skoki mogą wskazywać na pętle lub błędy",
+      cost_by_model_title: "Koszt według modelu",
+      cost_by_model_sub: "GPT-4o kosztuje ~50× więcej niż GPT-4o-mini za token",
+      tokens_title: "Tokeny wejściowe vs wyjściowe",
+      tokens_sub: "Tokeny wyjściowe są zwykle 3–5× droższe niż wejściowe",
+      cost_by_project_title: "Koszt według projektu",
+      cost_by_project_sub: "Który projekt lub aplikacja wydaje najwięcej",
+      top_users_title: "Najdrożsi użytkownicy",
+      top_users_sub: "Kto jest odpowiedzialny za największe użycie API",
+      suspicious_requests: "🚨 Podejrzane zapytania",
+      suspicious_desc: "Te zapytania kosztują znacznie więcej niż średnia — mogą wskazywać na błąd, pętlę lub nadmierne użycie.",
+      table_when: "Kiedy",
+      table_model: "Model AI",
+      table_user: "Użytkownik",
+      table_project: "Projekt",
+      table_tokens: "Tokeny",
+      table_cost: "Koszt",
+      potential_saving: "potencjalna oszczędność",
     },
     de: {
       hero_label: "🔍 AI Cost Audit — kostenlos & sofort",
@@ -710,23 +797,62 @@
       at_current_rate: "bei aktuellem Tempo",
       insights_label: "💡 Sparempfehlungen",
       no_anomalies: "✅ Keine Anomalien gefunden — alles sieht normal aus.",
+      dash_title: "Nutzungs-Dashboard",
+      total_reqs_made: "Anfragen gesamt",
+      unusual_calls: "ungewöhnlich teure Anfragen",
+      tooltip_total_spent: "Wie viel Geld du insgesamt für die API bezahlt hast",
+      tooltip_api_calls: "Eine Anfrage = einmal hat deine App die AI etwas gefragt",
+      tooltip_tokens: "Token — Maßeinheit für Text in der AI, ~1 Token ≈ ¾ eines Wortes",
+      tooltip_anomalies: "Anfragen die viel mehr als der Durchschnitt kosten — lohnt sich zu prüfen",
+      spending_over_time: "Ausgaben über Zeit",
+      where_money_goes: "Wohin geht das Geld",
+      anomaly_detection: "Anomalie-Erkennung",
+      daily_cost_title: "Tägliche Kosten",
+      daily_cost_sub: "Tagesausgaben — Spitzen können auf Schleifen oder Fehler hinweisen",
+      cost_by_model_title: "Kosten nach Modell",
+      cost_by_model_sub: "GPT-4o kostet ~50× mehr als GPT-4o-mini pro Token",
+      tokens_title: "Eingabe- vs Ausgabe-Token",
+      tokens_sub: "Ausgabe-Token sind meist 3–5× teurer als Eingabe-Token",
+      cost_by_project_title: "Kosten nach Projekt",
+      cost_by_project_sub: "Welches Projekt oder welche App gibt am meisten aus",
+      top_users_title: "Top-Nutzer nach Ausgaben",
+      top_users_sub: "Wer ist für die meiste API-Nutzung verantwortlich",
+      suspicious_requests: "🚨 Verdächtige Anfragen",
+      suspicious_desc: "Diese Anfragen kosten deutlich mehr als der Durchschnitt — können auf einen Fehler, eine Schleife oder unerwartete Nutzung hinweisen.",
+      table_when: "Wann",
+      table_model: "KI-Modell",
+      table_user: "Nutzer",
+      table_project: "Projekt",
+      table_tokens: "Token",
+      table_cost: "Kosten",
+      potential_saving: "potenzielle Ersparnis",
     },
   };
 
   let currentLang = "en";
+  let lastData = null;
 
   function setLang(lang) {
     currentLang = lang;
-    const t = LANGS[lang];
+    const tr = LANGS[lang];
     document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
     document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add("active");
     document.querySelectorAll("[data-i18n]").forEach(el => {
       const key = el.getAttribute("data-i18n");
-      if (t[key]) el.innerHTML = t[key];
+      if (tr[key]) el.innerHTML = tr[key];
     });
+    if (lastData) refreshDashboardTexts();
   }
 
   function t(key) { return LANGS[currentLang][key] || LANGS.en[key] || key; }
+
+  function refreshDashboardTexts() {
+    const s = lastData.summary;
+    document.getElementById("c-avg-cost").textContent =
+      "$" + s.avg_cost_per_request.toFixed(6) + " " + t("avg_per_call");
+    buildInsights(lastData);
+    renderAnomaliesTable(lastData.anomalies);
+  }
 
   // ── Smart Insights (Recommendations Engine) ──
   function buildInsights(d) {
@@ -871,7 +997,7 @@
           <div class="insight-body">
             <div class="insight-title">${ins.title}</div>
             <div class="insight-text">${ins.body}</div>
-            ${ins.savings ? `<div class="insight-savings">${ins.savings} potential saving</div>` : ""}
+            ${ins.savings ? `<div class="insight-savings">${ins.savings} ${t("potential_saving")}</div>` : ""}
           </div>
         </div>`;
     }).join("");
@@ -891,8 +1017,43 @@
     ...o,
   });
 
+  // ── Anomalies table ──
+  function renderAnomaliesTable(anomalies) {
+    const el = document.getElementById("anomalies-table");
+    if (anomalies.length === 0) {
+      el.innerHTML = `<p class="no-anomalies">${t("no_anomalies")}</p>`;
+    } else {
+      el.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>${t("table_when")}</th>
+              <th>${t("table_model")}</th>
+              <th>${t("table_user")}</th>
+              <th>${t("table_project")}</th>
+              <th>${t("table_tokens")}</th>
+              <th>${t("table_cost")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${anomalies.map(a => `
+              <tr>
+                <td>${a.timestamp}</td>
+                <td><span class="badge">${a.model}</span></td>
+                <td>${a.user_id}</td>
+                <td>${a.project_id}</td>
+                <td>${a.total_tokens.toLocaleString()}</td>
+                <td class="cost-high">$${a.cost_usd.toFixed(4)}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>`;
+    }
+  }
+
   // ── Render dashboard ──
   function renderDashboard(d) {
+    lastData = d;
     document.getElementById("loading").style.display = "none";
     document.getElementById("upload-section").style.display = "none";
     document.getElementById("dashboard").style.display = "block";
@@ -903,7 +1064,7 @@
       s.date_range.from + " – " + s.date_range.to;
     document.getElementById("c-total-cost").textContent = "$" + s.total_cost_usd.toFixed(4);
     document.getElementById("c-avg-cost").textContent =
-      "$" + s.avg_cost_per_request.toFixed(6) + " avg per call";
+      "$" + s.avg_cost_per_request.toFixed(6) + " " + t("avg_per_call");
     document.getElementById("c-requests").textContent = s.total_requests.toLocaleString();
     document.getElementById("c-tokens").textContent =
       (s.total_tokens / 1000).toFixed(1) + "K";
@@ -997,37 +1158,7 @@
       yaxis:{gridcolor:"#1e2736",linecolor:"#1e2736",zeroline:false,tickfont:{size:11}},
     }), cfg);
 
-    // Anomalies table
-    const el = document.getElementById("anomalies-table");
-    if (d.anomalies.length === 0) {
-      el.innerHTML = '<p class="no-anomalies">✅ Great news! No suspicious requests found — your usage looks healthy.</p>';
-    } else {
-      el.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>When</th>
-              <th>AI Model</th>
-              <th>User</th>
-              <th>Project</th>
-              <th>Tokens used</th>
-              <th>Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${d.anomalies.map(a => `
-              <tr>
-                <td>${a.timestamp}</td>
-                <td><span class="badge">${a.model}</span></td>
-                <td>${a.user_id}</td>
-                <td>${a.project_id}</td>
-                <td>${a.total_tokens.toLocaleString()}</td>
-                <td class="cost-high">$${a.cost_usd.toFixed(4)}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>`;
-    }
+    renderAnomaliesTable(d.anomalies);
   }
 </script>
 </body>
