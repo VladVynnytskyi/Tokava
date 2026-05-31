@@ -18,12 +18,12 @@ def index():
 @app.post("/analyze")
 async def analyze(file: UploadFile = File(...)):
     if not file.filename.endswith(".csv"):
-        raise HTTPException(status_code=400, detail="Потрібен CSV файл")
+        raise HTTPException(status_code=400, detail="A CSV file is required")
 
     contents = await file.read()
     try:
         result = analyze_csv(io.StringIO(contents.decode("utf-8")))
     except Exception as e:
-        raise HTTPException(status_code=422, detail=f"Помилка аналізу: {str(e)}")
+        raise HTTPException(status_code=422, detail=f"Analysis error: {str(e)}")
 
     return result
