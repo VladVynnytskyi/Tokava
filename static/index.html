@@ -53,44 +53,44 @@
     <div id="drop-zone">
       <div class="glow-ring"></div>
       <div class="drop-icon-wrap">📂</div>
-      <h2>Drop your CSV file here</h2>
-      <p class="drop-hint">or click the button to browse files from your computer</p>
+      <h2 data-i18n="drop_title">Drop your CSV file here</h2>
+      <p class="drop-hint" data-i18n="drop_hint">or click the button to browse files from your computer</p>
       <div class="upload-actions">
-        <button class="btn-primary" id="choose-btn">📁 Choose file</button>
-        <button class="btn-demo" id="demo-btn">▶ Try with demo data</button>
+        <button class="btn-primary" id="choose-btn" data-i18n="choose_file">📁 Choose file</button>
+        <button class="btn-demo" id="demo-btn" data-i18n="try_demo">▶ Try with demo data</button>
       </div>
       <input type="file" id="file-input" accept=".csv" />
     </div>
 
     <div class="steps">
-      <div class="step"><div class="step-num">1</div> Upload CSV from OpenAI / Claude</div>
+      <div class="step"><div class="step-num">1</div> <span data-i18n="step1">Upload CSV from OpenAI / Claude</span></div>
       <span class="step-arrow">→</span>
-      <div class="step"><div class="step-num">2</div> We analyze your data</div>
+      <div class="step"><div class="step-num">2</div> <span data-i18n="step2">We analyze your data</span></div>
       <span class="step-arrow">→</span>
-      <div class="step"><div class="step-num">3</div> See your full dashboard</div>
+      <div class="step"><div class="step-num">3</div> <span data-i18n="step3">See your full dashboard</span></div>
     </div>
 
     <!-- Features -->
     <div class="features-grid">
       <div class="feature-card">
         <span class="feature-icon">💰</span>
-        <h4>Total spend & trends</h4>
-        <p>See exactly how much you're spending per day, week, or model — and spot trends before they become a problem.</p>
+        <h4 data-i18n="feat1_title">Total spend & trends</h4>
+        <p data-i18n="feat1_body">See exactly how much you're spending per day, week, or model — and spot trends before they become a problem.</p>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🤖</span>
-        <h4>Model breakdown</h4>
-        <p>GPT-4o vs GPT-4o-mini vs Claude — find out which models are eating your budget and which ones are cost-efficient.</p>
+        <h4 data-i18n="feat2_title">Model breakdown</h4>
+        <p data-i18n="feat2_body">GPT-4o vs GPT-4o-mini vs Claude — find out which models are eating your budget and which ones are cost-efficient.</p>
       </div>
       <div class="feature-card">
         <span class="feature-icon">👥</span>
-        <h4>Top users & projects</h4>
-        <p>Instantly see which team members or apps are responsible for the most spending. No more guessing.</p>
+        <h4 data-i18n="feat3_title">Top users & projects</h4>
+        <p data-i18n="feat3_body">Instantly see which team members or apps are responsible for the most spending. No more guessing.</p>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🚨</span>
-        <h4>Anomaly detection</h4>
-        <p>We automatically flag requests that cost way more than your average — runaway loops or bugs caught instantly.</p>
+        <h4 data-i18n="feat4_title">Anomaly detection</h4>
+        <p data-i18n="feat4_body">We automatically flag requests that cost way more than your average — runaway loops or bugs caught instantly.</p>
       </div>
     </div>
 
@@ -99,31 +99,31 @@
       <div class="trust-item">
         <span class="trust-icon">🔒</span>
         <div>
-          <strong>Your data never leaves your browser session</strong>
-          <span>Files are sent directly to the analyzer and discarded immediately after processing</span>
+          <strong data-i18n="trust1_title">Your data never leaves your browser session</strong>
+          <span data-i18n="trust1_body">Files are sent directly to the analyzer and discarded immediately after processing</span>
         </div>
       </div>
       <div class="trust-divider"></div>
       <div class="trust-item">
         <span class="trust-icon">🚫</span>
         <div>
-          <strong>Zero storage</strong>
-          <span>We don't save, log, or share your CSV data. Nothing is written to a database.</span>
+          <strong data-i18n="trust2_title">Zero storage</strong>
+          <span data-i18n="trust2_body">We don't save, log, or share your CSV data. Nothing is written to a database.</span>
         </div>
       </div>
       <div class="trust-divider"></div>
       <div class="trust-item">
         <span class="trust-icon">⚡</span>
         <div>
-          <strong>100% free, no sign-up</strong>
-          <span>No account, no email, no tracking. Just upload and analyze.</span>
+          <strong data-i18n="trust3_title">100% free, no sign-up</strong>
+          <span data-i18n="trust3_body">No account, no email, no tracking. Just upload and analyze.</span>
         </div>
       </div>
     </div>
 
     <!-- Dashboard preview -->
     <div class="preview-section">
-      <p class="preview-label">What you'll see after upload</p>
+      <p class="preview-label" data-i18n="preview_label">What you'll see after upload</p>
       <div class="preview-box">
         <div class="preview-cards">
           <div class="preview-card accent"><div class="pc-label">Total Spent</div><div class="pc-val">$1.0877</div></div>
@@ -229,12 +229,12 @@
 
     <div id="loading">
       <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
-      <p>Crunching your numbers...</p>
+      <p data-i18n="loading_text">Crunching your numbers...</p>
       <div class="loading-steps">
-        <div class="loading-step active" id="ls-1">📥 Reading CSV file...</div>
-        <div class="loading-step" id="ls-2">🔢 Calculating totals...</div>
-        <div class="loading-step" id="ls-3">🔍 Detecting anomalies...</div>
-        <div class="loading-step" id="ls-4">📊 Building charts...</div>
+        <div class="loading-step active" id="ls-1" data-i18n="ls1">📥 Reading CSV file...</div>
+        <div class="loading-step" id="ls-2" data-i18n="ls2">🔢 Calculating totals...</div>
+        <div class="loading-step" id="ls-3" data-i18n="ls3">🔍 Detecting anomalies...</div>
+        <div class="loading-step" id="ls-4" data-i18n="ls4">📊 Building charts...</div>
       </div>
     </div>
   </section>
@@ -511,10 +511,10 @@
       const el = document.getElementById(id);
       el.className = "loading-step" + (i===0 ? " active" : "");
     });
-    document.getElementById("ls-1").textContent = "📥 Reading CSV file...";
-    document.getElementById("ls-2").textContent = "🔢 Calculating totals...";
-    document.getElementById("ls-3").textContent = "🔍 Detecting anomalies...";
-    document.getElementById("ls-4").textContent = "📊 Building charts...";
+    document.getElementById("ls-1").textContent = t("ls1");
+    document.getElementById("ls-2").textContent = t("ls2");
+    document.getElementById("ls-3").textContent = t("ls3");
+    document.getElementById("ls-4").textContent = t("ls4");
   }
 
   function downloadPDF() {
@@ -534,6 +534,26 @@
       step1: "Upload CSV from OpenAI / Claude",
       step2: "We audit your costs",
       step3: "Get savings recommendations",
+      feat1_title: "Total spend & trends",
+      feat1_body: "See exactly how much you're spending per day, week, or model — and spot trends before they become a problem.",
+      feat2_title: "Model breakdown",
+      feat2_body: "GPT-4o vs GPT-4o-mini vs Claude — find out which models are eating your budget and which ones are cost-efficient.",
+      feat3_title: "Top users & projects",
+      feat3_body: "Instantly see which team members or apps are responsible for the most spending. No more guessing.",
+      feat4_title: "Anomaly detection",
+      feat4_body: "We automatically flag requests that cost way more than your average — runaway loops or bugs caught instantly.",
+      trust1_title: "Your data never leaves your browser session",
+      trust1_body: "Files are sent directly to the analyzer and discarded immediately after processing",
+      trust2_title: "Zero storage",
+      trust2_body: "We don't save, log, or share your CSV data. Nothing is written to a database.",
+      trust3_title: "100% free, no sign-up",
+      trust3_body: "No account, no email, no tracking. Just upload and analyze.",
+      preview_label: "What you'll see after upload",
+      loading_text: "Crunching your numbers...",
+      ls1: "📥 Reading CSV file...",
+      ls2: "🔢 Calculating totals...",
+      ls3: "🔍 Detecting anomalies...",
+      ls4: "📊 Building charts...",
       analyzing: "Auditing your spending...",
       upload_another: "← Upload another file",
       download_pdf: "⬇ Download PDF",
@@ -561,6 +581,26 @@
       step1: "Завантаж CSV з OpenAI / Claude",
       step2: "Ми аналізуємо витрати",
       step3: "Отримай рекомендації",
+      feat1_title: "Загальні витрати та тренди",
+      feat1_body: "Бачиш скільки витрачаєш щодня, по тижню або по моделі — і помічаєш тренди до того, як вони стануть проблемою.",
+      feat2_title: "Розбивка по моделях",
+      feat2_body: "GPT-4o проти GPT-4o-mini проти Claude — дізнайся які моделі з'їдають бюджет, а які ефективні.",
+      feat3_title: "Топ користувачів та проектів",
+      feat3_body: "Миттєво бачиш хто з команди або які додатки витрачають найбільше. Без здогадок.",
+      feat4_title: "Виявлення аномалій",
+      feat4_body: "Автоматично позначаємо запити що коштують значно більше за середнє — зациклення або баги помічаємо одразу.",
+      trust1_title: "Твої дані не залишають браузер",
+      trust1_body: "Файли відправляються прямо до аналізатора і видаляються одразу після обробки",
+      trust2_title: "Нульове зберігання",
+      trust2_body: "Ми не зберігаємо, не логуємо і не передаємо дані з твого CSV. Нічого не записується в базу.",
+      trust3_title: "100% безкоштовно, без реєстрації",
+      trust3_body: "Ніякого акаунту, email чи трекінгу. Просто завантажи і аналізуй.",
+      preview_label: "Що побачиш після завантаження",
+      loading_text: "Аналізуємо дані...",
+      ls1: "📥 Читаємо CSV файл...",
+      ls2: "🔢 Розраховуємо підсумки...",
+      ls3: "🔍 Шукаємо аномалії...",
+      ls4: "📊 Будуємо графіки...",
       analyzing: "Аналізуємо витрати...",
       upload_another: "← Завантажити інший файл",
       download_pdf: "⬇ Завантажити PDF",
@@ -588,6 +628,26 @@
       step1: "Prześlij CSV z OpenAI / Claude",
       step2: "Analizujemy koszty",
       step3: "Otrzymaj rekomendacje",
+      feat1_title: "Łączne wydatki i trendy",
+      feat1_body: "Widzisz dokładnie ile wydajesz dziennie, tygodniowo lub na model — i zauważasz trendy zanim staną się problemem.",
+      feat2_title: "Podział według modelu",
+      feat2_body: "GPT-4o vs GPT-4o-mini vs Claude — dowiedz się które modele pochłaniają budżet, a które są opłacalne.",
+      feat3_title: "Top użytkownicy i projekty",
+      feat3_body: "Natychmiast widzisz którzy członkowie zespołu lub aplikacje odpowiadają za największe wydatki.",
+      feat4_title: "Wykrywanie anomalii",
+      feat4_body: "Automatycznie oznaczamy żądania które kosztują znacznie więcej niż średnia — pętle lub błędy wykrywamy od razu.",
+      trust1_title: "Twoje dane nie opuszczają przeglądarki",
+      trust1_body: "Pliki są wysyłane bezpośrednio do analizatora i usuwane natychmiast po przetworzeniu",
+      trust2_title: "Zero przechowywania",
+      trust2_body: "Nie zapisujemy, nie logujemy ani nie udostępniamy danych z CSV. Nic nie jest zapisywane do bazy.",
+      trust3_title: "100% bezpłatnie, bez rejestracji",
+      trust3_body: "Brak konta, email czy śledzenia. Po prostu prześlij i analizuj.",
+      preview_label: "Co zobaczysz po przesłaniu",
+      loading_text: "Analizujemy dane...",
+      ls1: "📥 Odczytujemy plik CSV...",
+      ls2: "🔢 Obliczamy sumy...",
+      ls3: "🔍 Wykrywamy anomalie...",
+      ls4: "📊 Budujemy wykresy...",
       analyzing: "Analizujemy wydatki...",
       upload_another: "← Prześlij inny plik",
       download_pdf: "⬇ Pobierz PDF",
@@ -615,6 +675,26 @@
       step1: "CSV von OpenAI / Claude hochladen",
       step2: "Wir analysieren deine Kosten",
       step3: "Sparempfehlungen erhalten",
+      feat1_title: "Gesamtausgaben & Trends",
+      feat1_body: "Sieh genau wie viel du pro Tag, Woche oder Modell ausgibst — und erkenne Trends bevor sie zum Problem werden.",
+      feat2_title: "Modell-Aufschlüsselung",
+      feat2_body: "GPT-4o vs GPT-4o-mini vs Claude — finde heraus welche Modelle dein Budget auffressen und welche kosteneffizient sind.",
+      feat3_title: "Top-Nutzer & Projekte",
+      feat3_body: "Sieh sofort welche Teammitglieder oder Apps für die meisten Ausgaben verantwortlich sind.",
+      feat4_title: "Anomalie-Erkennung",
+      feat4_body: "Wir markieren automatisch Anfragen die viel mehr als der Durchschnitt kosten — Endlosschleifen oder Bugs sofort erkannt.",
+      trust1_title: "Deine Daten verlassen nicht den Browser",
+      trust1_body: "Dateien werden direkt an den Analyzer gesendet und sofort nach der Verarbeitung gelöscht",
+      trust2_title: "Keine Speicherung",
+      trust2_body: "Wir speichern, loggen oder teilen keine CSV-Daten. Nichts wird in eine Datenbank geschrieben.",
+      trust3_title: "100% kostenlos, ohne Anmeldung",
+      trust3_body: "Kein Konto, keine E-Mail, kein Tracking. Einfach hochladen und analysieren.",
+      preview_label: "Was du nach dem Upload siehst",
+      loading_text: "Daten werden analysiert...",
+      ls1: "📥 CSV-Datei wird gelesen...",
+      ls2: "🔢 Summen werden berechnet...",
+      ls3: "🔍 Anomalien werden erkannt...",
+      ls4: "📊 Diagramme werden erstellt...",
       analyzing: "Ausgaben werden analysiert...",
       upload_another: "← Andere Datei hochladen",
       download_pdf: "⬇ PDF herunterladen",
