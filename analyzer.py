@@ -1,10 +1,17 @@
 import pandas as pd
-from datetime import datetime
 
 
 def analyze_csv(file_path_or_buffer) -> dict:
     df = pd.read_csv(file_path_or_buffer)
     df["timestamp"] = pd.to_datetime(df["timestamp"], format="mixed")
+
+    # Normalize column names so OpenAI and Anthropic CSVs both work
+    if "project_id" not in df.columns and "workspace_id" in df.columns:
+        df["project_id"] = df["workspace_id"]
+    if "project_id" not in df.columns:
+        df["project_id"] = "unknown"
+    if "user_id" not in df.columns:
+        df["user_id"] = "unknown"
 
     total_cost = round(df["cost_usd"].sum(), 4)
     total_requests = len(df)
@@ -26,8 +33,8 @@ def analyze_csv(file_path_or_buffer) -> dict:
         .sum()
         .round(4)
         .reset_index()
-        .rename(columns={"date": "date", "cost_usd": "cost"})
         .assign(date=lambda x: x["date"].astype(str))
+        .rename(columns={"cost_usd": "cost"})
         .to_dict(orient="records")
     )
 

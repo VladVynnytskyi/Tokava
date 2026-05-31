@@ -4,381 +4,289 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Cost Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0f1117;
-      color: #e2e8f0;
-      min-height: 100vh;
-    }
-
-    header {
-      padding: 24px 40px;
-      border-bottom: 1px solid #1e2330;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    header h1 {
-      font-size: 20px;
-      font-weight: 600;
-      color: #f8fafc;
-    }
-
-    header span {
-      font-size: 13px;
-      color: #64748b;
-    }
-
-    .logo {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
-
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 24px;
-    }
-
-    /* UPLOAD ZONE */
-    #upload-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 60vh;
-    }
-
-    #drop-zone {
-      width: 100%;
-      max-width: 520px;
-      border: 2px dashed #2d3748;
-      border-radius: 16px;
-      padding: 60px 40px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      background: #161b27;
-    }
-
-    #drop-zone:hover, #drop-zone.dragover {
-      border-color: #6366f1;
-      background: #1a1f33;
-    }
-
-    #drop-zone .icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
-
-    #drop-zone h2 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #f1f5f9;
-      margin-bottom: 8px;
-    }
-
-    #drop-zone p {
-      font-size: 14px;
-      color: #64748b;
-      margin-bottom: 24px;
-    }
-
-    .btn {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      color: white;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .btn:hover { opacity: 0.85; }
-
-    #file-input { display: none; }
-
-    #loading {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      margin-top: 32px;
-    }
-
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid #2d3748;
-      border-top-color: #6366f1;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* DASHBOARD */
-    #dashboard { display: none; }
-
-    .section-title {
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #64748b;
-      margin-bottom: 16px;
-    }
-
-    /* SUMMARY CARDS */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-
-    .card {
-      background: #161b27;
-      border: 1px solid #1e2330;
-      border-radius: 12px;
-      padding: 20px 24px;
-    }
-
-    .card-label {
-      font-size: 12px;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-    }
-
-    .card-value {
-      font-size: 28px;
-      font-weight: 700;
-      color: #f8fafc;
-    }
-
-    .card-sub {
-      font-size: 12px;
-      color: #475569;
-      margin-top: 4px;
-    }
-
-    .card.highlight .card-value { color: #818cf8; }
-
-    /* CHARTS GRID */
-    .charts-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-
-    .chart-box {
-      background: #161b27;
-      border: 1px solid #1e2330;
-      border-radius: 12px;
-      padding: 24px;
-    }
-
-    .chart-box.full { grid-column: 1 / -1; }
-
-    .chart-box h3 {
-      font-size: 14px;
-      font-weight: 600;
-      color: #94a3b8;
-      margin-bottom: 16px;
-    }
-
-    /* ANOMALIES TABLE */
-    .table-box {
-      background: #161b27;
-      border: 1px solid #1e2330;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 40px;
-    }
-
-    .table-box h3 {
-      font-size: 14px;
-      font-weight: 600;
-      color: #94a3b8;
-      margin-bottom: 16px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
-    th {
-      text-align: left;
-      padding: 8px 12px;
-      color: #64748b;
-      font-weight: 500;
-      border-bottom: 1px solid #1e2330;
-    }
-
-    td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #1a2030;
-      color: #cbd5e1;
-    }
-
-    tr:last-child td { border-bottom: none; }
-
-    .badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
-      background: #2d1f3d;
-      color: #c084fc;
-    }
-
-    .cost-high { color: #f87171; font-weight: 600; }
-
-    .reset-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: transparent;
-      border: 1px solid #2d3748;
-      color: #94a3b8;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 13px;
-      cursor: pointer;
-      margin-bottom: 32px;
-      transition: all 0.2s;
-    }
-
-    .reset-btn:hover { border-color: #6366f1; color: #818cf8; }
-
-    .no-anomalies {
-      color: #4ade80;
-      font-size: 14px;
-      padding: 12px 0;
-    }
-  </style>
 </head>
 <body>
 
+<!-- Background orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Full-screen drag overlay -->
+<div id="drag-overlay">
+  <div class="drag-overlay-inner">
+    <span class="big-icon">📂</span>
+    <h2>Release to analyze</h2>
+    <p>We'll process your CSV instantly</p>
+  </div>
+</div>
+
 <header>
-  <div class="logo">📊</div>
-  <h1>AI Cost Analyzer</h1>
-  <span>OpenAI &amp; Claude API usage insights</span>
+  <div class="header-left">
+    <div class="logo">📊</div>
+    <span class="logo-text">AI Cost Analyzer</span>
+  </div>
+  <span class="header-pill">OpenAI &amp; Claude API</span>
 </header>
 
 <main>
-  <!-- UPLOAD -->
+
+  <!-- ── UPLOAD ── -->
   <section id="upload-section">
+    <span class="hero-label">✨ Free &amp; instant analysis</span>
+    <h1 class="hero-headline">Understand your<br><span class="grad">AI spending</span></h1>
+    <p class="hero-sub">
+      Upload your API usage CSV and get a complete breakdown of costs,
+      top users, and suspicious activity — in seconds.
+    </p>
+
     <div id="drop-zone">
-      <div class="icon">📂</div>
+      <div class="glow-ring"></div>
+      <div class="drop-icon-wrap">📂</div>
       <h2>Drop your CSV file here</h2>
-      <p>or click the button below to select a file</p>
-      <button class="btn" onclick="document.getElementById('file-input').click()">Choose file</button>
+      <p class="drop-hint">or click the button to browse files from your computer</p>
+      <button class="btn-primary" id="choose-btn">
+        📁 Choose file
+      </button>
       <input type="file" id="file-input" accept=".csv" />
     </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div> Upload CSV from OpenAI / Claude</div>
+      <span class="step-arrow">→</span>
+      <div class="step"><div class="step-num">2</div> We analyze your data</div>
+      <span class="step-arrow">→</span>
+      <div class="step"><div class="step-num">3</div> See your full dashboard</div>
+    </div>
+
+    <!-- Features -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">💰</span>
+        <h4>Total spend & trends</h4>
+        <p>See exactly how much you're spending per day, week, or model — and spot trends before they become a problem.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🤖</span>
+        <h4>Model breakdown</h4>
+        <p>GPT-4o vs GPT-4o-mini vs Claude — find out which models are eating your budget and which ones are cost-efficient.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">👥</span>
+        <h4>Top users & projects</h4>
+        <p>Instantly see which team members or apps are responsible for the most spending. No more guessing.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🚨</span>
+        <h4>Anomaly detection</h4>
+        <p>We automatically flag requests that cost way more than your average — runaway loops or bugs caught instantly.</p>
+      </div>
+    </div>
+
+    <!-- Privacy & trust bar -->
+    <div class="trust-bar">
+      <div class="trust-item">
+        <span class="trust-icon">🔒</span>
+        <div>
+          <strong>Your data never leaves your browser session</strong>
+          <span>Files are sent directly to the analyzer and discarded immediately after processing</span>
+        </div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-icon">🚫</span>
+        <div>
+          <strong>Zero storage</strong>
+          <span>We don't save, log, or share your CSV data. Nothing is written to a database.</span>
+        </div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-icon">⚡</span>
+        <div>
+          <strong>100% free, no sign-up</strong>
+          <span>No account, no email, no tracking. Just upload and analyze.</span>
+        </div>
+      </div>
+    </div>
+
     <div id="loading">
-      <div class="spinner"></div>
-      <span style="color:#64748b; font-size:14px;">Analyzing data...</span>
+      <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
+      <p>Crunching your numbers...</p>
+      <div class="loading-steps">
+        <div class="loading-step active" id="ls-1">📥 Reading CSV file...</div>
+        <div class="loading-step" id="ls-2">🔢 Calculating totals...</div>
+        <div class="loading-step" id="ls-3">🔍 Detecting anomalies...</div>
+        <div class="loading-step" id="ls-4">📊 Building charts...</div>
+      </div>
     </div>
   </section>
 
-  <!-- DASHBOARD -->
+  <!-- ── DASHBOARD ── -->
   <section id="dashboard">
-    <button class="reset-btn" onclick="reset()">← Upload another file</button>
 
-    <p class="section-title">Overview</p>
-    <div class="cards">
-      <div class="card highlight">
-        <div class="card-label">Total Cost</div>
-        <div class="card-value" id="c-total-cost">—</div>
-        <div class="card-sub" id="c-date-range">—</div>
+    <div class="dash-header">
+      <div>
+        <div class="dash-title">
+          Usage Dashboard
+          <span class="date-range" id="dash-date-range"></span>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-label">Requests</div>
-        <div class="card-value" id="c-requests">—</div>
-        <div class="card-sub" id="c-avg-cost">—</div>
-      </div>
-      <div class="card">
-        <div class="card-label">Total Tokens</div>
-        <div class="card-value" id="c-tokens">—</div>
-        <div class="card-sub">input + output</div>
-      </div>
-      <div class="card">
-        <div class="card-label">Anomalies</div>
-        <div class="card-value" id="c-anomalies">—</div>
-        <div class="card-sub">suspicious requests</div>
+      <div class="dash-actions">
+        <button class="btn-pdf" onclick="downloadPDF()">⬇ Download PDF</button>
+        <button class="btn-ghost" onclick="reset()">← New file</button>
       </div>
     </div>
 
-    <div class="charts-grid">
-      <div class="chart-box full">
-        <h3>Cost by Day</h3>
+    <!-- Summary cards -->
+    <p class="section-label">At a glance</p>
+    <div class="cards">
+      <div class="card card-accent">
+        <span class="card-icon">💸</span>
+        <div class="card-label">Total Spent</div>
+        <div class="card-value" id="c-total-cost">—</div>
+        <div class="card-sub" id="c-avg-cost">— avg per call</div>
+        <div class="card-tooltip">How much money you paid to the AI API in total</div>
+      </div>
+      <div class="card card-cyan">
+        <span class="card-icon">⚡</span>
+        <div class="card-label">API Calls</div>
+        <div class="card-value" id="c-requests">—</div>
+        <div class="card-sub">total requests made</div>
+        <div class="card-tooltip">Each call = one time your app asked the AI something</div>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon">🔢</span>
+        <div class="card-label">Tokens Used</div>
+        <div class="card-value" id="c-tokens">—</div>
+        <div class="card-sub">words in + words out</div>
+        <div class="card-tooltip">Tokens are how AI measures text — ~1 token ≈ ¾ of a word</div>
+      </div>
+      <div class="card card-red">
+        <span class="card-icon">🚨</span>
+        <div class="card-label">Anomalies</div>
+        <div class="card-value" id="c-anomalies">—</div>
+        <div class="card-sub">unusually expensive calls</div>
+        <div class="card-tooltip">Requests that cost way more than your average — worth reviewing</div>
+      </div>
+    </div>
+
+    <!-- Smart Insights -->
+    <p class="section-label">Smart insights</p>
+    <div class="insights-grid" id="insights-grid"></div>
+
+    <!-- Cost over time -->
+    <p class="section-label">Spending over time</p>
+    <div class="charts-grid single">
+      <div class="chart-box full" style="animation-delay:0.1s">
+        <div class="chart-header">
+          <h3><span class="dot"></span>Daily Cost</h3>
+          <p>How much you spent each day — spikes may indicate heavy usage or a runaway process</p>
+        </div>
         <div id="chart-by-day"></div>
       </div>
-      <div class="chart-box">
-        <h3>Cost by Model</h3>
+    </div>
+
+    <!-- Breakdown -->
+    <p class="section-label">Where your money goes</p>
+    <div class="charts-grid">
+      <div class="chart-box" style="animation-delay:0.15s">
+        <div class="chart-header">
+          <h3><span class="dot"></span>Cost by Model</h3>
+          <p>GPT-4o costs ~50× more than GPT-4o-mini per token</p>
+        </div>
         <div id="chart-by-model"></div>
       </div>
-      <div class="chart-box">
-        <h3>Tokens: Input vs Output</h3>
+      <div class="chart-box" style="animation-delay:0.2s">
+        <div class="chart-header">
+          <h3><span class="dot"></span>Input vs Output Tokens</h3>
+          <p>Output tokens are usually 3–5× more expensive than input</p>
+        </div>
         <div id="chart-tokens"></div>
       </div>
-      <div class="chart-box">
-        <h3>Cost by Project</h3>
+      <div class="chart-box" style="animation-delay:0.25s">
+        <div class="chart-header">
+          <h3><span class="dot"></span>Cost by Project</h3>
+          <p>Which project or app is spending the most</p>
+        </div>
         <div id="chart-by-project"></div>
       </div>
-      <div class="chart-box">
-        <h3>Top Users by Cost</h3>
+      <div class="chart-box" style="animation-delay:0.3s">
+        <div class="chart-header">
+          <h3><span class="dot"></span>Top Users by Spend</h3>
+          <p>Who is responsible for the most API usage</p>
+        </div>
         <div id="chart-top-users"></div>
       </div>
     </div>
 
+    <!-- Anomalies -->
+    <p class="section-label">Anomaly detection</p>
     <div class="table-box">
-      <h3>⚠️ Anomalies — requests with unusually high cost</h3>
-      <div id="anomalies-table"></div>
+      <div class="table-header">
+        <h3>🚨 Suspicious Requests</h3>
+        <p>These requests cost significantly more than your average — they may indicate a bug, a loop, or unexpected heavy usage.</p>
+      </div>
+      <div class="table-scroll">
+        <div id="anomalies-table"></div>
+      </div>
     </div>
+
   </section>
 </main>
 
 <script>
-  const dropZone = document.getElementById("drop-zone");
+  // ── File upload wiring ──
   const fileInput = document.getElementById("file-input");
+  const chooseBtn = document.getElementById("choose-btn");
 
-  dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("dragover"); });
-  dropZone.addEventListener("dragleave", () => dropZone.classList.remove("dragover"));
-  dropZone.addEventListener("drop", e => {
-    e.preventDefault();
-    dropZone.classList.remove("dragover");
-    const file = e.dataTransfer.files[0];
-    if (file) uploadFile(file);
+  // Fix: explicit click handler separate from drop zone
+  chooseBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    fileInput.click();
   });
 
   fileInput.addEventListener("change", () => {
     if (fileInput.files[0]) uploadFile(fileInput.files[0]);
   });
 
+  // ── Drag & drop on the whole page ──
+  let dragCounter = 0;
+  document.addEventListener("dragenter", (e) => {
+    e.preventDefault();
+    dragCounter++;
+    document.getElementById("drag-overlay").classList.add("active");
+  });
+  document.addEventListener("dragleave", () => {
+    dragCounter--;
+    if (dragCounter <= 0) {
+      dragCounter = 0;
+      document.getElementById("drag-overlay").classList.remove("active");
+    }
+  });
+  document.addEventListener("dragover", (e) => e.preventDefault());
+  document.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dragCounter = 0;
+    document.getElementById("drag-overlay").classList.remove("active");
+    const file = e.dataTransfer.files[0];
+    if (file) uploadFile(file);
+  });
+
+  // ── Upload ──
   async function uploadFile(file) {
+    if (!file.name.endsWith(".csv")) {
+      alert("Please upload a .csv file.");
+      return;
+    }
+
     document.getElementById("drop-zone").style.display = "none";
+    document.querySelector(".steps").style.display = "none";
     document.getElementById("loading").style.display = "flex";
+
+    animateLoadingSteps();
 
     const form = new FormData();
     form.append("file", file);
@@ -387,143 +295,309 @@
       const res = await fetch("/analyze", { method: "POST", body: form });
       if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.detail || "Помилка сервера");
+        throw new Error(err.detail || "Server error");
       }
       const data = await res.json();
       renderDashboard(data);
     } catch (e) {
       document.getElementById("loading").style.display = "none";
       document.getElementById("drop-zone").style.display = "block";
+      document.querySelector(".steps").style.display = "flex";
       alert("Error: " + e.message);
     }
+  }
+
+  function animateLoadingSteps() {
+    const steps = ["ls-1","ls-2","ls-3","ls-4"];
+    let i = 0;
+    const iv = setInterval(() => {
+      if (i > 0) {
+        document.getElementById(steps[i-1]).classList.remove("active");
+        document.getElementById(steps[i-1]).classList.add("done");
+        document.getElementById(steps[i-1]).textContent =
+          "✓ " + document.getElementById(steps[i-1]).textContent.slice(2);
+      }
+      if (i < steps.length) {
+        document.getElementById(steps[i]).classList.add("active");
+      }
+      i++;
+      if (i >= steps.length) clearInterval(iv);
+    }, 700);
   }
 
   function reset() {
     document.getElementById("dashboard").style.display = "none";
     document.getElementById("upload-section").style.display = "flex";
     document.getElementById("drop-zone").style.display = "block";
+    document.querySelector(".steps").style.display = "flex";
     document.getElementById("loading").style.display = "none";
     fileInput.value = "";
+    // reset loading steps
+    ["ls-1","ls-2","ls-3","ls-4"].forEach((id, i) => {
+      const el = document.getElementById(id);
+      el.className = "loading-step" + (i===0 ? " active" : "");
+    });
+    document.getElementById("ls-1").textContent = "📥 Reading CSV file...";
+    document.getElementById("ls-2").textContent = "🔢 Calculating totals...";
+    document.getElementById("ls-3").textContent = "🔍 Detecting anomalies...";
+    document.getElementById("ls-4").textContent = "📊 Building charts...";
   }
 
-  const plotLayout = (extra = {}) => ({
+  function downloadPDF() {
+    window.print();
+  }
+
+  // ── Smart Insights ──
+  function buildInsights(d) {
+    const s = d.summary;
+    const insights = [];
+
+    // Top user
+    const topUser = Object.keys(d.top_users)[0];
+    const topUserCost = Object.values(d.top_users)[0];
+    const topUserPct = ((topUserCost / s.total_cost_usd) * 100).toFixed(0);
+    insights.push({
+      icon: "👤",
+      color: "purple",
+      title: `<b>${topUser}</b> is your biggest spender`,
+      body: `They account for <b>${topUserPct}%</b> of your total budget ($${topUserCost.toFixed(4)}). Consider setting usage limits or reviewing their workflows.`,
+    });
+
+    // Expensive model tip
+    const models = Object.keys(d.by_model);
+    const hasMini = models.some(m => m.includes("mini") || m.includes("haiku"));
+    const hasExpensive = models.some(m => m.includes("gpt-4o") && !m.includes("mini") || m.includes("opus"));
+    if (hasExpensive && hasMini) {
+      const expensiveCost = Object.entries(d.by_model).find(([m]) => !m.includes("mini") && !m.includes("haiku"));
+      const cheapCost = Object.entries(d.by_model).find(([m]) => m.includes("mini") || m.includes("haiku"));
+      const ratio = (expensiveCost[1] / (expensiveCost[1] + cheapCost[1]) * 100).toFixed(0);
+      insights.push({
+        icon: "💡",
+        color: "yellow",
+        title: `${ratio}% of costs come from the expensive model`,
+        body: `<b>${expensiveCost[0]}</b> costs ~50× more per token than <b>${cheapCost[0]}</b>. Routing simpler tasks to the cheaper model could cut your bill significantly.`,
+      });
+    } else if (models.length === 1) {
+      insights.push({
+        icon: "💡",
+        color: "yellow",
+        title: `You're using only one model`,
+        body: `All requests go through <b>${models[0]}</b>. Consider testing a cheaper model for simpler tasks — you could save 30–80% on those calls.`,
+      });
+    }
+
+    // Peak day
+    const peakDay = d.by_day.reduce((a, b) => b.cost > a.cost ? b : a);
+    const avgDay = s.total_cost_usd / d.by_day.length;
+    const peakMultiplier = (peakDay.cost / avgDay).toFixed(1);
+    insights.push({
+      icon: "📅",
+      color: "cyan",
+      title: `Your busiest day was <b>${peakDay.date}</b>`,
+      body: `You spent <b>$${peakDay.cost.toFixed(4)}</b> — that's <b>${peakMultiplier}×</b> your daily average. Check what happened that day: batch job, traffic spike, or a bug?`,
+    });
+
+    // Top project
+    const topProject = Object.keys(d.by_project)[0];
+    const topProjectCost = Object.values(d.by_project)[0];
+    const topProjectPct = ((topProjectCost / s.total_cost_usd) * 100).toFixed(0);
+    if (Object.keys(d.by_project).length > 1) {
+      insights.push({
+        icon: "📁",
+        color: "green",
+        title: `<b>${topProject}</b> drives most of your spending`,
+        body: `This project is responsible for <b>${topProjectPct}%</b> of total costs. It may be worth setting a monthly budget alert for it.`,
+      });
+    }
+
+    // Token efficiency
+    const totalInput = d.tokens_by_model.reduce((s, r) => s + r.input_tokens, 0);
+    const totalOutput = d.tokens_by_model.reduce((s, r) => s + r.output_tokens, 0);
+    const ratio = (totalOutput / totalInput * 100).toFixed(0);
+    if (ratio < 30) {
+      insights.push({
+        icon: "🔢",
+        color: "blue",
+        title: `Your output/input token ratio is low (${ratio}%)`,
+        body: `You're sending much more text than you're receiving back. Consider shortening your system prompts or compressing the context — it could reduce costs noticeably.`,
+      });
+    } else {
+      insights.push({
+        icon: "✅",
+        color: "green",
+        title: `Good token efficiency`,
+        body: `Your output/input ratio is <b>${ratio}%</b> — a healthy sign. Prompts are reasonably sized relative to the responses you're getting.`,
+      });
+    }
+
+    // Anomaly tip
+    if (d.anomalies.length > 0) {
+      const worst = d.anomalies[0];
+      insights.push({
+        icon: "🚨",
+        color: "red",
+        title: `${d.anomalies.length} suspicious request${d.anomalies.length > 1 ? "s" : ""} detected`,
+        body: `The most expensive was <b>$${worst.cost_usd.toFixed(4)}</b> by <b>${worst.user_id}</b> on ${worst.timestamp.split(" ")[0]}. These could be runaway loops or accidental large context windows — worth investigating.`,
+      });
+    }
+
+    const colorMap = {
+      purple: { bg: "rgba(168,85,247,0.08)", border: "rgba(168,85,247,0.2)", dot: "#a855f7" },
+      yellow: { bg: "rgba(251,191,36,0.07)", border: "rgba(251,191,36,0.2)", dot: "#fbbf24" },
+      cyan:   { bg: "rgba(34,211,238,0.07)", border: "rgba(34,211,238,0.2)", dot: "#22d3ee" },
+      green:  { bg: "rgba(52,211,153,0.07)", border: "rgba(52,211,153,0.2)", dot: "#34d399" },
+      red:    { bg: "rgba(248,113,113,0.08)", border: "rgba(248,113,113,0.2)", dot: "#f87171" },
+      blue:   { bg: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.2)", dot: "#6366f1" },
+    };
+
+    const grid = document.getElementById("insights-grid");
+    grid.innerHTML = insights.map(ins => {
+      const c = colorMap[ins.color];
+      return `
+        <div class="insight-card" style="background:${c.bg};border-color:${c.border}">
+          <div class="insight-icon" style="background:${c.border}">${ins.icon}</div>
+          <div class="insight-body">
+            <div class="insight-title">${ins.title}</div>
+            <div class="insight-text">${ins.body}</div>
+          </div>
+        </div>`;
+    }).join("");
+  }
+
+  // ── Plotly config ──
+  const COLORS = ["#6366f1","#a855f7","#22d3ee","#34d399","#fbbf24","#f87171","#fb923c"];
+  const cfg = { responsive: true, displayModeBar: false };
+
+  const lay = (o = {}) => ({
     paper_bgcolor: "transparent",
     plot_bgcolor: "transparent",
-    font: { color: "#94a3b8", size: 12 },
-    margin: { t: 10, r: 10, b: 40, l: 50 },
-    ...extra,
+    font: { color: "#8b9ab5", size: 12, family: "Inter, sans-serif" },
+    margin: { t: 8, r: 16, b: 40, l: 56 },
+    xaxis: { gridcolor: "#1e2736", linecolor: "#1e2736", zeroline: false, tickfont: { size: 11 } },
+    yaxis: { gridcolor: "#1e2736", linecolor: "#1e2736", zeroline: false, tickfont: { size: 11 } },
+    ...o,
   });
 
-  const COLORS = ["#6366f1", "#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#f87171"];
-
+  // ── Render dashboard ──
   function renderDashboard(d) {
     document.getElementById("loading").style.display = "none";
     document.getElementById("upload-section").style.display = "none";
     document.getElementById("dashboard").style.display = "block";
 
     const s = d.summary;
+
+    document.getElementById("dash-date-range").textContent =
+      s.date_range.from + " – " + s.date_range.to;
     document.getElementById("c-total-cost").textContent = "$" + s.total_cost_usd.toFixed(4);
-    document.getElementById("c-date-range").textContent = s.date_range.from + " — " + s.date_range.to;
+    document.getElementById("c-avg-cost").textContent =
+      "$" + s.avg_cost_per_request.toFixed(6) + " avg per call";
     document.getElementById("c-requests").textContent = s.total_requests.toLocaleString();
-    document.getElementById("c-avg-cost").textContent = "$" + s.avg_cost_per_request.toFixed(6) + " / request";
-    document.getElementById("c-tokens").textContent = (s.total_tokens / 1000).toFixed(1) + "K";
+    document.getElementById("c-tokens").textContent =
+      (s.total_tokens / 1000).toFixed(1) + "K";
     document.getElementById("c-anomalies").textContent = d.anomalies.length;
 
-    // Chart: cost by day
+    buildInsights(d);
+
+    // Daily cost bar chart with gradient color
     Plotly.newPlot("chart-by-day", [{
       x: d.by_day.map(r => r.date),
       y: d.by_day.map(r => r.cost),
       type: "bar",
-      marker: { color: "#6366f1" },
-      hovertemplate: "%{x}<br>$%{y:.4f}<extra></extra>",
-    }], plotLayout({
-      xaxis: { gridcolor: "#1e2330" },
-      yaxis: { gridcolor: "#1e2330", tickprefix: "$" },
-    }), { responsive: true, displayModeBar: false });
+      marker: {
+        color: d.by_day.map(r => r.cost),
+        colorscale: [[0,"#1e2a4a"],[0.5,"#4f46e5"],[1,"#818cf8"]],
+        showscale: false,
+        line: { width: 0 },
+      },
+      hovertemplate: "<b>%{x}</b><br>Spent: <b>$%{y:.4f}</b><extra></extra>",
+    }], lay({
+      yaxis: { gridcolor:"#1e2736", linecolor:"#1e2736", zeroline:false, tickprefix:"$", tickfont:{size:11} },
+      bargap: 0.3,
+    }), cfg);
 
-    // Chart: by model (pie)
-    const modelNames = Object.keys(d.by_model);
-    const modelVals = Object.values(d.by_model);
+    // Model donut
     Plotly.newPlot("chart-by-model", [{
-      labels: modelNames,
-      values: modelVals,
-      type: "pie",
-      hole: 0.5,
-      marker: { colors: COLORS },
+      labels: Object.keys(d.by_model),
+      values: Object.values(d.by_model),
+      type: "pie", hole: 0.62,
+      marker: { colors: COLORS, line: { color: "#07090f", width: 3 } },
       textinfo: "label+percent",
-      hovertemplate: "%{label}<br>$%{value:.4f}<extra></extra>",
-    }], plotLayout({ margin: { t: 10, r: 10, b: 10, l: 10 }, showlegend: false }), { responsive: true, displayModeBar: false });
+      textfont: { size: 12 },
+      hovertemplate: "<b>%{label}</b><br>Cost: $%{value:.4f}<br>Share: %{percent}<extra></extra>",
+      rotation: 45,
+    }], lay({
+      margin:{t:10,r:10,b:10,l:10},
+      showlegend: true,
+      legend: { font:{color:"#8b9ab5",size:12}, bgcolor:"transparent", orientation:"h", x:0.5, xanchor:"center", y:-0.05 },
+      height: 280,
+    }), cfg);
 
-    // Chart: tokens input vs output
-    const tokenModels = d.tokens_by_model.map(r => r.model);
+    // Tokens grouped bar
     Plotly.newPlot("chart-tokens", [
       {
-        name: "Input",
-        x: tokenModels,
+        name: "Input tokens",
+        x: d.tokens_by_model.map(r => r.model),
         y: d.tokens_by_model.map(r => r.input_tokens),
-        type: "bar",
-        marker: { color: "#6366f1" },
+        type: "bar", marker: { color: "#6366f1" },
+        hovertemplate: "<b>%{x}</b> — Input<br>%{y:,} tokens<extra></extra>",
       },
       {
-        name: "Output",
-        x: tokenModels,
+        name: "Output tokens",
+        x: d.tokens_by_model.map(r => r.model),
         y: d.tokens_by_model.map(r => r.output_tokens),
-        type: "bar",
-        marker: { color: "#8b5cf6" },
+        type: "bar", marker: { color: "#a855f7" },
+        hovertemplate: "<b>%{x}</b> — Output<br>%{y:,} tokens<extra></extra>",
       },
-    ], plotLayout({
-      barmode: "group",
-      xaxis: { gridcolor: "#1e2330" },
-      yaxis: { gridcolor: "#1e2330" },
-      legend: { font: { color: "#94a3b8" } },
-    }), { responsive: true, displayModeBar: false });
+    ], lay({
+      barmode: "group", bargap: 0.25,
+      legend: { font:{color:"#8b9ab5",size:12}, bgcolor:"transparent" },
+      margin:{t:10,r:16,b:40,l:70},
+    }), cfg);
 
-    // Chart: by project
-    const projNames = Object.keys(d.by_project);
-    const projVals = Object.values(d.by_project);
+    // Cost by project horizontal
     Plotly.newPlot("chart-by-project", [{
-      x: projVals,
-      y: projNames,
-      type: "bar",
-      orientation: "h",
-      marker: { color: "#06b6d4" },
-      hovertemplate: "%{y}<br>$%{x:.4f}<extra></extra>",
-    }], plotLayout({
-      margin: { t: 10, r: 20, b: 40, l: 100 },
-      xaxis: { gridcolor: "#1e2330", tickprefix: "$" },
-      yaxis: { gridcolor: "#1e2330" },
-    }), { responsive: true, displayModeBar: false });
+      x: Object.values(d.by_project),
+      y: Object.keys(d.by_project),
+      type: "bar", orientation: "h",
+      marker: { color: "#22d3ee" },
+      hovertemplate: "<b>%{y}</b><br>Spent: $%{x:.4f}<extra></extra>",
+    }], lay({
+      margin:{t:10,r:16,b:40,l:120},
+      xaxis:{gridcolor:"#1e2736",linecolor:"#1e2736",zeroline:false,tickprefix:"$",tickfont:{size:11}},
+      yaxis:{gridcolor:"#1e2736",linecolor:"#1e2736",zeroline:false,tickfont:{size:11}},
+    }), cfg);
 
-    // Chart: top users
-    const userNames = Object.keys(d.top_users);
-    const userVals = Object.values(d.top_users);
+    // Top users horizontal with green gradient
+    const uVals = Object.values(d.top_users);
+    const uMax = Math.max(...uVals);
     Plotly.newPlot("chart-top-users", [{
-      x: userVals,
-      y: userNames,
-      type: "bar",
-      orientation: "h",
-      marker: { color: "#10b981" },
-      hovertemplate: "%{y}<br>$%{x:.4f}<extra></extra>",
-    }], plotLayout({
-      margin: { t: 10, r: 20, b: 40, l: 100 },
-      xaxis: { gridcolor: "#1e2330", tickprefix: "$" },
-      yaxis: { gridcolor: "#1e2330" },
-    }), { responsive: true, displayModeBar: false });
+      x: uVals,
+      y: Object.keys(d.top_users),
+      type: "bar", orientation: "h",
+      marker: {
+        color: uVals.map(v => `rgba(52,211,153,${0.3 + 0.7*(v/uMax)})`),
+      },
+      hovertemplate: "<b>%{y}</b><br>Spent: $%{x:.4f}<extra></extra>",
+    }], lay({
+      margin:{t:10,r:16,b:40,l:120},
+      xaxis:{gridcolor:"#1e2736",linecolor:"#1e2736",zeroline:false,tickprefix:"$",tickfont:{size:11}},
+      yaxis:{gridcolor:"#1e2736",linecolor:"#1e2736",zeroline:false,tickfont:{size:11}},
+    }), cfg);
 
     // Anomalies table
-    const tbody = document.getElementById("anomalies-table");
+    const el = document.getElementById("anomalies-table");
     if (d.anomalies.length === 0) {
-      tbody.innerHTML = '<p class="no-anomalies">✓ No anomalies detected</p>';
+      el.innerHTML = '<p class="no-anomalies">✅ Great news! No suspicious requests found — your usage looks healthy.</p>';
     } else {
-      tbody.innerHTML = `
+      el.innerHTML = `
         <table>
           <thead>
             <tr>
-              <th>Time</th>
-              <th>Model</th>
+              <th>When</th>
+              <th>AI Model</th>
               <th>User</th>
               <th>Project</th>
-              <th>Tokens</th>
+              <th>Tokens used</th>
               <th>Cost</th>
             </tr>
           </thead>
