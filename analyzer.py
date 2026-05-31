@@ -1,9 +1,27 @@
 import pandas as pd
 
 
+REQUIRED_COLUMNS = {"timestamp", "model", "input_tokens", "output_tokens", "total_tokens", "cost_usd"}
+
+
 def analyze_csv(file_path_or_buffer) -> dict:
-    df = pd.read_csv(file_path_or_buffer)
-    df["timestamp"] = pd.to_datetime(df["timestamp"], format="mixed")
+    try:
+        df = pd.read_csv(file_path_or_buffer)
+    except Exception:
+        raise ValueError("Could not read the file. Make sure it's a valid CSV export.")
+
+    missing = REQUIRED_COLUMNS - set(df.columns)
+    if missing:
+        raise ValueError(
+            f"This doesn't look like an OpenAI or Claude usage export. "
+            f"Missing columns: {', '.join(sorted(missing))}. "
+            f"Please download the CSV directly from your API dashboard."
+        )
+
+    try:
+        df["timestamp"] = pd.to_datetime(df["timestamp"], format="mixed")
+    except Exception:
+        raise ValueError("Could not parse the 'timestamp' column. Make sure dates are in a standard format.")
 
     # Normalize column names so OpenAI and Anthropic CSVs both work
     if "project_id" not in df.columns and "workspace_id" in df.columns:

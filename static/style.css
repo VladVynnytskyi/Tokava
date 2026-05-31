@@ -225,6 +225,33 @@ main { position: relative; z-index: 1; padding-top: 58px; }
 }
 .step-arrow { color: var(--text-3); font-size: 16px; }
 
+/* ── ERROR BOX ── */
+#error-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 540px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 16px 18px;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease;
+}
+.error-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.error-content { flex: 1; }
+.error-title { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+.error-msg { font-size: 12px; color: #fca5a5; line-height: 1.5; }
+.error-close {
+  background: transparent; border: none;
+  color: var(--text-3); font-size: 16px;
+  cursor: pointer; padding: 0 4px;
+  flex-shrink: 0; line-height: 1;
+  transition: color 0.2s;
+}
+.error-close:hover { color: var(--red); }
+
 /* ── FEATURES GRID ── */
 .features-grid {
   display: grid;

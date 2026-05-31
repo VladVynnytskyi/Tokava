@@ -112,6 +112,15 @@
       </div>
     </div>
 
+    <div id="error-box" style="display:none">
+      <div class="error-icon">⚠️</div>
+      <div class="error-content">
+        <div class="error-title">Could not analyze this file</div>
+        <div class="error-msg" id="error-msg"></div>
+      </div>
+      <button class="error-close" onclick="hideError()">✕</button>
+    </div>
+
     <div id="loading">
       <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
       <p>Crunching your numbers...</p>
@@ -275,10 +284,21 @@
     if (file) uploadFile(file);
   });
 
+  function showError(msg) {
+    document.getElementById("error-msg").textContent = msg;
+    document.getElementById("error-box").style.display = "flex";
+  }
+
+  function hideError() {
+    document.getElementById("error-box").style.display = "none";
+  }
+
   // ── Upload ──
   async function uploadFile(file) {
+    hideError();
+
     if (!file.name.endsWith(".csv")) {
-      alert("Please upload a .csv file.");
+      showError("Please upload a .csv file. Other file formats are not supported.");
       return;
     }
 
@@ -303,7 +323,7 @@
       document.getElementById("loading").style.display = "none";
       document.getElementById("drop-zone").style.display = "block";
       document.querySelector(".steps").style.display = "flex";
-      alert("Error: " + e.message);
+      showError(e.message);
     }
   }
 
