@@ -47,9 +47,10 @@
       <div class="drop-icon-wrap">📂</div>
       <h2>Drop your CSV file here</h2>
       <p class="drop-hint">or click the button to browse files from your computer</p>
-      <button class="btn-primary" id="choose-btn">
-        📁 Choose file
-      </button>
+      <div class="upload-actions">
+        <button class="btn-primary" id="choose-btn">📁 Choose file</button>
+        <button class="btn-demo" id="demo-btn">▶ Try with demo data</button>
+      </div>
       <input type="file" id="file-input" accept=".csv" />
     </div>
 
@@ -112,6 +113,103 @@
       </div>
     </div>
 
+    <!-- Dashboard preview -->
+    <div class="preview-section">
+      <p class="preview-label">What you'll see after upload</p>
+      <div class="preview-box">
+        <div class="preview-cards">
+          <div class="preview-card accent"><div class="pc-label">Total Spent</div><div class="pc-val">$1.0877</div></div>
+          <div class="preview-card"><div class="pc-label">API Calls</div><div class="pc-val">50</div></div>
+          <div class="preview-card"><div class="pc-label">Tokens Used</div><div class="pc-val">159K</div></div>
+          <div class="preview-card red"><div class="pc-label">Anomalies</div><div class="pc-val">6</div></div>
+        </div>
+        <div class="preview-charts">
+          <div class="preview-chart tall">
+            <div class="pc-title">Daily Cost</div>
+            <div class="preview-bars">
+              <div class="preview-bar-wrap"><div class="preview-bar" style="height:85%"></div><span>May 1</span></div>
+              <div class="preview-bar-wrap"><div class="preview-bar" style="height:55%"></div><span>May 2</span></div>
+              <div class="preview-bar-wrap"><div class="preview-bar" style="height:30%"></div><span>May 3</span></div>
+              <div class="preview-bar-wrap"><div class="preview-bar" style="height:48%"></div><span>May 4</span></div>
+              <div class="preview-bar-wrap"><div class="preview-bar" style="height:22%"></div><span>May 5</span></div>
+            </div>
+          </div>
+          <div class="preview-chart">
+            <div class="pc-title">By Model</div>
+            <div class="preview-donut">
+              <svg viewBox="0 0 80 80" width="80" height="80">
+                <circle cx="40" cy="40" r="28" fill="none" stroke="#6366f1" stroke-width="16" stroke-dasharray="161 15" stroke-dashoffset="40"/>
+                <circle cx="40" cy="40" r="28" fill="none" stroke="#a855f7" stroke-width="16" stroke-dasharray="15 161" stroke-dashoffset="-121"/>
+                <circle cx="40" cy="40" r="18" fill="#0d1117"/>
+              </svg>
+              <div class="donut-legend">
+                <div class="dl-item"><span style="background:#6366f1"></span>gpt-4o 98%</div>
+                <div class="dl-item"><span style="background:#a855f7"></span>mini 2%</div>
+              </div>
+            </div>
+          </div>
+          <div class="preview-chart">
+            <div class="pc-title">Top Users</div>
+            <div class="preview-hbars">
+              <div class="phb-row"><span>user_bot</span><div class="phb-track"><div class="phb-fill" style="width:100%"></div></div></div>
+              <div class="phb-row"><span>user_08</span><div class="phb-track"><div class="phb-fill" style="width:40%"></div></div></div>
+              <div class="phb-row"><span>user_19</span><div class="phb-track"><div class="phb-fill" style="width:36%"></div></div></div>
+              <div class="phb-row"><span>user_42</span><div class="phb-track"><div class="phb-fill" style="width:22%"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="preview-blur-overlay">
+          <button class="btn-primary" id="choose-btn-2">📁 Upload your CSV to see your data</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Transparency -->
+    <div class="transparency-section">
+      <div class="transparency-header">
+        <h3>How it works under the hood</h3>
+        <a href="https://github.com/VladVynnytskyi/AI_analyzer" target="_blank" class="gh-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View source on GitHub
+        </a>
+      </div>
+      <div class="arch-flow">
+        <div class="arch-step">
+          <div class="arch-icon">📂</div>
+          <div class="arch-label">Your CSV</div>
+          <div class="arch-sub">stays in your browser until upload</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-step">
+          <div class="arch-icon">⚡</div>
+          <div class="arch-label">FastAPI server</div>
+          <div class="arch-sub">receives file, passes to analyzer</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-step">
+          <div class="arch-icon">🐼</div>
+          <div class="arch-label">Pandas</div>
+          <div class="arch-sub">open-source Python library, processes data in memory</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-step">
+          <div class="arch-icon">🗑️</div>
+          <div class="arch-label">Data discarded</div>
+          <div class="arch-sub">file deleted immediately after analysis</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-step">
+          <div class="arch-icon">📊</div>
+          <div class="arch-label">JSON result</div>
+          <div class="arch-sub">aggregated stats only, no raw rows</div>
+        </div>
+      </div>
+      <div class="opensource-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        100% open source · Built with <a href="https://fastapi.tiangolo.com" target="_blank">FastAPI</a>, <a href="https://pandas.pydata.org" target="_blank">Pandas</a>, <a href="https://plotly.com/javascript/" target="_blank">Plotly.js</a> · <a href="https://github.com/VladVynnytskyi/AI_analyzer" target="_blank">Audit the code yourself</a>
+      </div>
+    </div>
+
     <div id="error-box" style="display:none">
       <div class="error-icon">⚠️</div>
       <div class="error-content">
@@ -132,6 +230,45 @@
       </div>
     </div>
   </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="logo">📊</div>
+          <span>AI Cost Analyzer</span>
+        </div>
+        <p>Open-source tool for understanding your OpenAI & Claude API spending. No sign-up, no tracking, no nonsense.</p>
+        <a href="https://github.com/VladVynnytskyi/AI_analyzer" target="_blank" class="footer-gh">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          Star on GitHub
+        </a>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Product</h5>
+          <a href="#" onclick="document.getElementById('demo-btn').click();return false;">Try Demo</a>
+          <a href="https://github.com/VladVynnytskyi/AI_analyzer" target="_blank">Source Code</a>
+          <a href="https://github.com/VladVynnytskyi/AI_analyzer/issues" target="_blank">Report a Bug</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="#privacy">Privacy Policy</a>
+          <a href="#terms">Terms of Use</a>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <a href="mailto:vynnytskyivladyslav@gmail.com">Email us</a>
+          <a href="https://github.com/VladVynnytskyi" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AI Cost Analyzer · Built by <a href="https://github.com/VladVynnytskyi" target="_blank">Vladyslav Vynnytskyi</a></span>
+      <span>Open source · No data stored · Free forever</span>
+    </div>
+  </footer>
 
   <!-- ── DASHBOARD ── -->
   <section id="dashboard">
@@ -250,15 +387,24 @@
   // ── File upload wiring ──
   const fileInput = document.getElementById("file-input");
   const chooseBtn = document.getElementById("choose-btn");
+  const chooseBtn2 = document.getElementById("choose-btn-2");
+  const demoBtn = document.getElementById("demo-btn");
 
-  // Fix: explicit click handler separate from drop zone
-  chooseBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    fileInput.click();
-  });
+  chooseBtn.addEventListener("click", (e) => { e.stopPropagation(); fileInput.click(); });
+  chooseBtn2.addEventListener("click", (e) => { e.stopPropagation(); fileInput.click(); });
 
   fileInput.addEventListener("change", () => {
     if (fileInput.files[0]) uploadFile(fileInput.files[0]);
+  });
+
+  // Demo button — fetch sample CSV and analyze
+  demoBtn.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    hideError();
+    const res = await fetch("/static/demo.csv");
+    const blob = await res.blob();
+    const file = new File([blob], "demo_openai_usage.csv", { type: "text/csv" });
+    uploadFile(file);
   });
 
   // ── Drag & drop on the whole page ──
