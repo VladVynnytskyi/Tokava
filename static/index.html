@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tokava — AI Cost Audit</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
   <link rel="icon" type="image/png" href="/static/logo.png">
   <link rel="stylesheet" href="/static/style.css" />
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
@@ -17,6 +18,16 @@
   </script>
 </head>
 <body>
+
+<!-- Splash screen -->
+<div id="splash">
+  <div class="splash-inner">
+    <img src="/static/logo.png" alt="Tokava" class="splash-logo">
+    <span class="splash-name">Tokava</span>
+    <span class="splash-sub">AI Cost Audit</span>
+  </div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
 
 <!-- Background orbs -->
 <div class="orb orb-1"></div>
@@ -1179,6 +1190,15 @@
 
     renderAnomaliesTable(d.anomalies);
   }
+
+  // ── Splash screen ──
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const splash = document.getElementById("splash");
+      splash.classList.add("hide");
+      setTimeout(() => splash.style.display = "none", 650);
+    }, 1600);
+  });
 </script>
 </body>
 </html>
