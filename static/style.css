@@ -640,6 +640,87 @@ tbody tr:hover td { background: var(--surface-2); color: var(--text-1); }
 }
 .btn-demo:hover { border-color: var(--accent); color: var(--accent-light); }
 
+/* ── HOW TO GET CSV ── */
+.how-to-section {
+  max-width: 860px;
+  margin: 0 auto 56px;
+  padding: 0 20px;
+}
+.how-to-label {
+  text-align: center;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 20px;
+}
+.how-to-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media(max-width: 640px) { .how-to-grid { grid-template-columns: 1fr; } }
+
+.how-to-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+  transition: border-color 0.2s;
+}
+.how-to-card:hover { border-color: var(--border-hover); }
+
+.provider-badge {
+  display: inline-block;
+  font-size: 12px; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+.provider-badge.openai {
+  background: rgba(16,163,127,0.12);
+  color: #10a37f;
+  border: 1px solid rgba(16,163,127,0.25);
+}
+.provider-badge.anthropic {
+  background: rgba(207,157,107,0.12);
+  color: #cf9d6b;
+  border: 1px solid rgba(207,157,107,0.25);
+}
+.how-to-steps {
+  list-style: none;
+  counter-reset: steps;
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 0; padding: 0;
+}
+.how-to-steps li {
+  counter-increment: steps;
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--text-2); line-height: 1.5;
+}
+.how-to-steps li::before {
+  content: counter(steps);
+  min-width: 20px; height: 20px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 700;
+  color: var(--text-3);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.how-to-steps li a { color: var(--accent-light); text-decoration: none; }
+.how-to-steps li a:hover { text-decoration: underline; }
+.how-to-steps li strong { color: var(--text-1); font-weight: 600; }
+.how-to-link {
+  font-size: 12px; font-weight: 600;
+  color: var(--text-3);
+  text-decoration: none;
+  margin-top: auto;
+  transition: color 0.15s;
+}
+.how-to-link:hover { color: var(--accent-light); }
+
 /* ── DASHBOARD PREVIEW ── */
 .preview-section {
   max-width: 860px; width: 100%;
