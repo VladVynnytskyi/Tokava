@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tokava</title>
+  <title>Tokava — AI Cost Audit</title>
   <link rel="stylesheet" href="/static/style.css" />
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBSLDJGJDH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GBSLDJGJDH');
+  </script>
 </head>
 <body>
 
@@ -409,6 +417,7 @@
   demoBtn.addEventListener("click", async (e) => {
     e.stopPropagation();
     hideError();
+    gtag("event", "demo_clicked");
     const res = await fetch("/static/demo.csv");
     const blob = await res.blob();
     const file = new File([blob], "demo_openai_usage.csv", { type: "text/csv" });
@@ -460,6 +469,7 @@
     document.querySelector(".steps").style.display = "none";
     document.getElementById("loading").style.display = "flex";
 
+    gtag("event", "file_uploaded", { file_name: file.name });
     animateLoadingSteps();
 
     const form = new FormData();
@@ -472,8 +482,14 @@
         throw new Error(err.detail || "Server error");
       }
       const data = await res.json();
+      gtag("event", "analysis_success", {
+        total_cost: data.summary.total_cost_usd,
+        total_requests: data.summary.total_requests,
+        days_in_range: data.summary.days_in_range,
+      });
       renderDashboard(data);
     } catch (e) {
+      gtag("event", "analysis_error", { error_message: e.message });
       document.getElementById("loading").style.display = "none";
       document.getElementById("drop-zone").style.display = "block";
       document.querySelector(".steps").style.display = "flex";
@@ -518,6 +534,7 @@
   }
 
   function downloadPDF() {
+    gtag("event", "pdf_download");
     window.print();
   }
 
@@ -833,6 +850,7 @@
   let lastData = null;
 
   function setLang(lang) {
+    gtag("event", "lang_switch", { language: lang });
     currentLang = lang;
     const tr = LANGS[lang];
     document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
